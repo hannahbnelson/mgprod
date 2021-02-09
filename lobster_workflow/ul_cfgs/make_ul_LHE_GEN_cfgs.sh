@@ -161,7 +161,7 @@ make_ul18_gen_cfg(){
     # GEN ttHJet
     FRAGMENT=ttHJets_custom_ND-fragment.py
     setup_rel $REL $FRAGMENT
-    make_ul18_gen_cfg "UL18_GEN_ttHJetcfg.py" "LHE-00000.root" "GEN-00000.root" $FRAGMENT
+    make_ul18_gen_cfg "UL18_GEN_ttHJet_cfg.py" "LHE-00000.root" "GEN-00000.root" $FRAGMENT
 
     # GEN ttlnuJet
     FRAGMENT=ttlnuJets_custom_ND-fragment.py
