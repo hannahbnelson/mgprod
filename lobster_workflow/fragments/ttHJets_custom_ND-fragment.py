@@ -41,6 +41,14 @@ generator = cms.EDFilter("Pythia8HadronizerFilter",
             '24:mMin = 0.05',       # Solve problem with mW cut
             '25:onMode = on',       # Allow all higgs decays 
             '25:offIfAny = 5 5',    # Switch decays of b quarks off
+            'TimeShower:mMaxGamma = 4.0',
+            'UncertaintyBands:doVariations = on',
+            'UncertaintyBands:List = {isrRedHi isr:muRfac=0.707,fsrRedHi fsr:muRfac=0.707,isrRedLo isr:muRfac=1.414,fsrRedLo fsr:muRfac=1.414,isrDefHi isr:muRfac=0.5, fsrDefHi fsr:muRfac=0.5,isrDefLo isr:muRfac=2.0,fsrDefLo fsr:muRfac=2.0,isrConHi isr:muRfac=0.25, fsrConHi fsr:muRfac=0.25,isrConLo isr:muRfac=4.0,fsrConLo fsr:muRfac=4.0}',
+            'UncertaintyBands:MPIshowers = on',
+            'UncertaintyBands:overSampleFSR = 10.0',
+            'UncertaintyBands:overSampleISR = 10.0',
+            'UncertaintyBands:FSRpTmin2Fac = 20',
+            'UncertaintyBands:ISRpTmin2Fac = 1',
         ),
         parameterSets = cms.vstring(
             'pythia8CommonSettings',
