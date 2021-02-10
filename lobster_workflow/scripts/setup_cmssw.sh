@@ -35,3 +35,6 @@ setup_rel(){
 
 # For the UL18 cfgs (releases that are not already in UL16)
 ( setup_rel CMSSW_10_2_16_UL )
+
+# For the UL LHE and UL GEN cfgs
+( setup_rel CMSSW_10_6_19_patch3 )
