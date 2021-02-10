@@ -10,11 +10,21 @@ sys.path.append(os.getcwd())
 from helpers.utils import regex_match, run_process
 
 MODIFIED_CFG_DIR = "python_cfgs/modified"
-
 timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
-
 input_path = "/store/user/"
 input_path_full = "/hadoop" + input_path
+
+master_label = 'EFT_ALL_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
+
+########## Set up the lobster cfg ##########
+
+# Note: Should not have to modify things outside of this section, unless you want to:
+#    - Hardcode lhe dirs
+#    - Modify gen cfgs
+
+# Specify what kind of output to make
+STEPS = 'throughGEN'
+#STEPS = 'throughNAOD'
 
 # Specfy the run setup
 #RUN_SETUP = 'full_production'
@@ -22,32 +32,57 @@ input_path_full = "/hadoop" + input_path
 RUN_SETUP = 'testing'
 
 # Specify the UL year
-#UL_YEAR = 'UL16'
-UL_YEAR = 'UL16APV'
+UL_YEAR = 'UL16'
+#UL_YEAR = 'UL16APV'
 #UL_YEAR = 'UL17'
 #UL_YEAR = 'UL18'
 
-# Speciy the LHE sample
-# Note: The workflows in each of the input directories should all be uniquely named w.r.t each other
-input_dirs = [
-    #os.path.join(input_path_full,"kmohrman/LHE_step/2019_04_19/ttXJetTests-HanV4Model-xqcut10/v1")
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL16/v1"),
-    os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL16APV/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL18/v1"),
-]
-
 # Name the output
 out_ver = "v1"   # The version index for the OUTPUT directory
-#out_tag = "Round6/Batch9"                               # For 'full_production' setup
 out_tag = "2019_04_19/TEST"
+
 
 # Only run over lhe steps from specific processes/coeffs/runs
 process_whitelist = []
 coeff_whitelist   = []
 runs_whitelist    = []  # (i.e. MG starting points)
 
-master_label = 'EFT_ALL_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
+# Specify the input directories. Note: The workflows in each of the input directories should all be uniquely named w.r.t each other
+input_dirs = [
+    os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL16/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL16APV/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL18/v1"),
+]
+
+
+
+########## Select input directories according to whitelists ##########
+
+lhe_dirs = []
+for path in input_dirs:
+    for fd in os.listdir(path):
+        if fd.find('lhe_step_') < 0:
+            continue
+        arr = fd.split('_')
+        p,c,r = arr[2],arr[3],arr[4]
+        if len(regex_match([p],process_whitelist)) == 0:
+            continue
+        elif len(regex_match([c],coeff_whitelist)) == 0:
+            continue
+        elif len(regex_match([r],runs_whitelist)) == 0:
+            continue
+        relpath = os.path.relpath(path,input_path_full)
+        lhe_dirs.append(os.path.join(relpath,fd))
+
+# Hardcode the lhe dirs by hand
+#lhe_dirs = [
+#    #"kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4/v1/lhe_step_tHq4f_testOldGenprodHanV4_run2"
+#    "kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/ttHJet_testOldGenprod-testModels/v1/lhe_step_ttHJet_testOldGenproddim6TopMay20GST_run1", # 100k
+#]
+
+
+########## Set up output based on run setup ##########
 
 if RUN_SETUP == 'mg_studies':
     # For MadGraph test studies
@@ -60,6 +95,7 @@ elif RUN_SETUP == 'full_production':
     workdir_path = "/tmpscratch/users/$USER/FullProduction/{tag}/postLHE_step/{ver}".format(tag=out_tag,ver=out_ver)
     plotdir_path = "~/www/lobster/FullProduction/{tag}/postLHE_step/{ver}".format(tag=out_tag,ver=out_ver)
 elif RUN_SETUP == 'testing':
+    # For test runs (where you do not intend to keep the output)
     grp_tag = "lobster_{tstamp}".format(tstamp=timestamp_tag)
     output_path  = "/store/user/$USER/postLHE_step/tests/{tag}/{ver}".format(tag=grp_tag,ver=out_ver)
     workdir_path = "/tmpscratch/users/$USER/postLHE_step/tests/{tag}/{ver}".format(tag=grp_tag,ver=out_ver)
@@ -67,6 +103,9 @@ elif RUN_SETUP == 'testing':
 else:
     print "Unknown run setup, {setup}".format(setup=RUN_SETUP)
     raise ValueError
+
+
+########## Configure storage ##########
 
 storage = StorageConfiguration(
     input=[
@@ -86,35 +125,13 @@ storage = StorageConfiguration(
     disable_input_streaming=False,
 )
 
-lhe_dirs = []
-for path in input_dirs:
-    for fd in os.listdir(path):
-        if fd.find('lhe_step_') < 0:
-            continue
-        arr = fd.split('_')
-        p,c,r = arr[2],arr[3],arr[4]
-        if len(regex_match([p],process_whitelist)) == 0:
-            continue
-        elif len(regex_match([c],coeff_whitelist)) == 0:
-            continue
-        elif len(regex_match([r],runs_whitelist)) == 0:
-            continue
-        relpath = os.path.relpath(path,input_path_full)
-        lhe_dirs.append(os.path.join(relpath,fd))
 
-# Specify lhe dirs by hand
-#lhe_dirs = [
-#    #"kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4/v1/lhe_step_tHq4f_testOldGenprodHanV4_run2"
-#    "kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/ttHJet_testOldGenprod-testModels/v1/lhe_step_ttHJet_testOldGenproddim6TopMay20GST_run1", # 100k
-#]
+########## Resources for each step ##########
 
-#################################################################
 # Worker Res.:
 #   Cores:  12    | 4
 #   Memory: 16000 | 8000
 #   Disk:   13000 | 6500
-#################################################################
-# Need to be careful with using 'runtime' setting, as it can cause us to exceed the workers resources
 
 gen_resources = Category(
     name='gen',
@@ -125,17 +142,14 @@ gen_resources = Category(
     tasks_max=3000,
     mode='fixed'
 )
-
 sim_resources = Category(
     name='sim',
-    #cores=12,
     cores=6,
     memory=3000,
     disk=3000,
     tasks_min=12,
     mode='fixed'
 )
-
 digi_resources = Category(
     name='digi',
     cores=6,
@@ -143,8 +157,6 @@ digi_resources = Category(
     disk=6000,
     mode='fixed'
 )
-
-# Not sure what to put for this... same as digi???
 hlt_resources = Category(
     name='hlt',
     cores=2,
@@ -152,7 +164,6 @@ hlt_resources = Category(
     disk=6000,
     mode='fixed'
 )
-
 reco_resources = Category(
     name='reco',
     cores=3,
@@ -160,7 +171,6 @@ reco_resources = Category(
     disk=3000,
     mode='fixed'
 )
-
 maod_resources = Category(
     name='maod',
     cores=2,
@@ -168,7 +178,6 @@ maod_resources = Category(
     disk=2000,
     mode='fixed'
 )
-
 naod_resources = Category(
     name='naod',
     cores=2,
@@ -177,10 +186,10 @@ naod_resources = Category(
     mode='fixed'
 )
 
-#################################################################
+
+########## Set up dictionary for cfg files ##########
 
 wf_steps = ['gen','sim','digi','hlt','reco','maod','naod']
-
 ul_base = 'ul_cfgs'
 
 ul_cfg_map = {
@@ -226,7 +235,6 @@ ul_cfg_map = {
     }
 
 }
-
 gen_ul_cfg_map = {
     'UL16' : {
         'ttHJet' : {
@@ -297,6 +305,13 @@ gen_ul_cfg_map = {
         }
     },
 }
+# Put the gen configs into the ul cfg map
+fragment_map = ul_cfg_map[UL_YEAR]
+for k,v in gen_ul_cfg_map[UL_YEAR].iteritems():
+    fragment_map[k] = v
+
+
+########## Specify CMSSW rel for each step ##########
 
 rel_map = {
     'UL16' : {
@@ -338,34 +353,22 @@ rel_map = {
 
 }
 
-# Put the gen configs into the ul cfg map
-fragment_map = ul_cfg_map[UL_YEAR]
-for k,v in gen_ul_cfg_map[UL_YEAR].iteritems():
-    fragment_map[k] = v
 
-#print("Fragement map!")
-#for k,v in fragment_map.iteritems():
-    #print k,":",v
+########## Optionally modify the GEN cfgs ##########
 
 gs_mods_dict = {}
-
 gs_mods_dict["base"] = {}
 gs_mods_dict["base"]["base"] = []
+# Example of q cut variation
 #gs_mods_dict["ttHJet"] = {}
 #gs_mods_dict["ttHJet"]['qCut15'] = ['s|JetMatching:qCut = 19|JetMatching:qCut = 15|g']
 #gs_mods_dict["ttHJet"]['qCut19'] = ['s|JetMatching:qCut = 19|JetMatching:qCut = 19|g']
 #gs_mods_dict["ttHJet"]['qCut25'] = ['s|JetMatching:qCut = 19|JetMatching:qCut = 25|g']
 
-# Don't need to turn off matching for single top samples since using cfg with matching already turned off
-#gs_mods_dict["tllq4fNoSchanWNoHiggs0p"] = {}
-#gs_mods_dict["tllq4fNoSchanWNoHiggs0p"]['MatchOff'] = ['s|JetMatching:merge = on|JetMatching:merge = off|g']
 
-# Don't need to turn off matching for single top samples since using cfg with matching already turned off
-#gs_mods_dict["tHq4f"] = {}
-#gs_mods_dict["tHq4f"]['MatchOff'] = ['s|JetMatching:merge = on|JetMatching:merge = off|g']
+########## Generate workflows ##########
 
 wf = []
-
 print "Generating workflows:"
 for idx,lhe_dir in enumerate(lhe_dirs):
     # Raise exception if trying to make UL sample but the UL year is not in the path anywhere
@@ -389,8 +392,7 @@ for idx,lhe_dir in enumerate(lhe_dirs):
                 template_loc = fragment_map[p][step]
             else:
                 template_loc = fragment_map["all_procs"][step]
-            #print "template loc !!", template_loc
-            # Only the GEN-SIM step can be modified
+            # Only the GEN step can be modified
             if step == 'gen':
                 head,tail = os.path.split(template_loc)
                 # This should be a unique identifier within a single lobster master to ensure we dont overwrite a cfg file too early
@@ -407,7 +409,6 @@ for idx,lhe_dir in enumerate(lhe_dirs):
         if mod_tag == 'base': mod_tag = ''
         label_tag = "{p}_{c}{mod}_{r}".format(p=p,c=c,r=r,mod=mod_tag)
 
-        #print "\nThis is the wf_fragments:",wf_fragments,"\n"
 
         gen = Workflow(
             label='gen_step_{tag}'.format(tag=label_tag),
@@ -419,7 +420,6 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             outputs=['GEN-00000.root'],
             dataset=Dataset(
                 files=lhe_dir,
-                #files_per_task=2,
                 files_per_task=1,
                 patterns=["*.root"]
             ),
@@ -497,13 +497,12 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             category=maod_resources
         )
 
-        # No idea about these settings... just go with same as maod?
         naod = Workflow(
             label='nAOD_step_{tag}'.format(tag=label_tag),
             command='cmsRun {cfg}'.format(cfg=wf_fragments['naod']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['naod']),
             merge_size='256M',
-            cleanup_input=False,
+            cleanup_input=False, # Leave the MAOD files
             outputs=['NAOD-00000.root'],
             dataset=ParentDataset(
                 parent=maod,
@@ -512,9 +511,14 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             category=naod_resources
         )
 
-        wf.extend([gen])
-        #wf.extend([gen,sim,digi,hlt,reco,maod])
-        #wf.extend([gen,sim,digi,hlt,reco,maod,naod])
+        # Specify which steps to run
+        if (STEPS == 'throughGEN'):
+            wf.extend([gen])
+        elif (STEPS == 'throughNAOD'):
+            wf.extend([gen,sim,digi,hlt,reco,maod,naod])
+        else:
+            print "\nUnknown steps" , STEPS , "exiting...\n"
+            raise Exception
 
 config = Config(
     label=master_label,
