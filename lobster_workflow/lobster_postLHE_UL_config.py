@@ -1,7 +1,3 @@
-###########################################################################################
-################### This script is not done yet!!! Do not use it yet!!! ###################
-###########################################################################################
-
 import datetime
 import os
 import sys
@@ -20,22 +16,29 @@ timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 input_path = "/store/user/"
 input_path_full = "/hadoop" + input_path
 
+# Specfy the run setup
 #RUN_SETUP = 'full_production'
 #RUN_SETUP = 'mg_studies'
 RUN_SETUP = 'testing'
 
+# Specify the UL year
 #UL_YEAR = 'UL16'
-#UL_YEAR = 'UL16APV'
+UL_YEAR = 'UL16APV'
 #UL_YEAR = 'UL17'
-UL_YEAR = 'UL18'
+#UL_YEAR = 'UL18'
 
+# Speciy the LHE sample
 # Note: The workflows in each of the input directories should all be uniquely named w.r.t each other
 input_dirs = [
-    os.path.join(input_path_full,"kmohrman/LHE_step/2019_04_19/ttXJetTests-HanV4Model-xqcut10/v1")
+    #os.path.join(input_path_full,"kmohrman/LHE_step/2019_04_19/ttXJetTests-HanV4Model-xqcut10/v1")
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL16/v1"),
+    os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL16APV/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL18/v1"),
 ]
 
+# Name the output
 out_ver = "v1"   # The version index for the OUTPUT directory
-
 #out_tag = "Round6/Batch9"                               # For 'full_production' setup
 out_tag = "2019_04_19/TEST"
 
@@ -99,10 +102,11 @@ for path in input_dirs:
         relpath = os.path.relpath(path,input_path_full)
         lhe_dirs.append(os.path.join(relpath,fd))
 
-lhe_dirs = [
-    #"kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4/v1/lhe_step_tHq4f_testOldGenprodHanV4_run2"
-    "kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/ttHJet_testOldGenprod-testModels/v1/lhe_step_ttHJet_testOldGenproddim6TopMay20GST_run1", # 100k
-]
+# Specify lhe dirs by hand
+#lhe_dirs = [
+#    #"kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4/v1/lhe_step_tHq4f_testOldGenprodHanV4_run2"
+#    "kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/ttHJet_testOldGenprod-testModels/v1/lhe_step_ttHJet_testOldGenproddim6TopMay20GST_run1", # 100k
+#]
 
 #################################################################
 # Worker Res.:
@@ -364,6 +368,11 @@ wf = []
 
 print "Generating workflows:"
 for idx,lhe_dir in enumerate(lhe_dirs):
+    # Raise exception if trying to make UL sample but the UL year is not in the path anywhere
+    if ( (UL_YEAR not in lhe_dir) or ((UL_YEAR == "UL16") and ("APV" in lhe_dir)) ):
+        print "\nWARNING: UL year selected, but lhe dir path does not contain this UL year in it anywhere, are you sure you have the right path? Please double check."
+        print "\tUL Year:" , UL_YEAR, "\n\tPath:" , lhe_dir, "\nExiting...\n"
+        raise Exception
     print "\t[{0}/{1}] LHE Input: {dir}".format(idx+1,len(lhe_dirs),dir=lhe_dir)
     head,tail = os.path.split(lhe_dir)
     arr = tail.split('_')
@@ -380,7 +389,7 @@ for idx,lhe_dir in enumerate(lhe_dirs):
                 template_loc = fragment_map[p][step]
             else:
                 template_loc = fragment_map["all_procs"][step]
-            print "template loc !!", template_loc
+            #print "template loc !!", template_loc
             # Only the GEN-SIM step can be modified
             if step == 'gen':
                 head,tail = os.path.split(template_loc)
@@ -398,7 +407,7 @@ for idx,lhe_dir in enumerate(lhe_dirs):
         if mod_tag == 'base': mod_tag = ''
         label_tag = "{p}_{c}{mod}_{r}".format(p=p,c=c,r=r,mod=mod_tag)
 
-        print "\nThis is the wf_fragments:",wf_fragments,"\n"
+        #print "\nThis is the wf_fragments:",wf_fragments,"\n"
 
         gen = Workflow(
             label='gen_step_{tag}'.format(tag=label_tag),
@@ -503,8 +512,9 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             category=naod_resources
         )
 
+        wf.extend([gen])
         #wf.extend([gen,sim,digi,hlt,reco,maod])
-        wf.extend([gen,sim,digi,hlt,reco,maod,naod])
+        #wf.extend([gen,sim,digi,hlt,reco,maod,naod])
 
 config = Config(
     label=master_label,
