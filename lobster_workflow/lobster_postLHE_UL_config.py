@@ -24,10 +24,10 @@ input_path_full = "/hadoop" + input_path
 #RUN_SETUP = 'mg_studies'
 RUN_SETUP = 'testing'
 
-UL_YEAR = 'UL16'
+#UL_YEAR = 'UL16'
 #UL_YEAR = 'UL16APV'
 #UL_YEAR = 'UL17'
-#UL_YEAR = 'UL18'
+UL_YEAR = 'UL18'
 
 # Note: The workflows in each of the input directories should all be uniquely named w.r.t each other
 input_dirs = [
@@ -86,7 +86,6 @@ storage = StorageConfiguration(
 lhe_dirs = []
 for path in input_dirs:
     for fd in os.listdir(path):
-        print ("FD!!!",fd)
         if fd.find('lhe_step_') < 0:
             continue
         arr = fd.split('_')
@@ -101,7 +100,8 @@ for path in input_dirs:
         lhe_dirs.append(os.path.join(relpath,fd))
 
 lhe_dirs = [
-    "kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4/v1/lhe_step_tHq4f_testOldGenprodHanV4_run2"
+    #"kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4/v1/lhe_step_tHq4f_testOldGenprodHanV4_run2"
+    "kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/ttHJet_testOldGenprod-testModels/v1/lhe_step_ttHJet_testOldGenproddim6TopMay20GST_run1", # 100k
 ]
 
 #################################################################
@@ -115,7 +115,7 @@ lhe_dirs = [
 gen_resources = Category(
     name='gen',
     cores=1,
-    memory=1200,
+    memory=600,
     disk=1000,
     tasks_min=12,
     tasks_max=3000,
@@ -143,8 +143,8 @@ digi_resources = Category(
 # Not sure what to put for this... same as digi???
 hlt_resources = Category(
     name='hlt',
-    cores=6,
-    memory=7800,
+    cores=2,
+    memory=3000,
     disk=6000,
     mode='fixed'
 )
@@ -164,9 +164,18 @@ maod_resources = Category(
     disk=2000,
     mode='fixed'
 )
+
+naod_resources = Category(
+    name='naod',
+    cores=2,
+    memory=2500,
+    disk=2000,
+    mode='fixed'
+)
+
 #################################################################
 
-wf_steps = ['gen','sim','digi','hlt','reco','maod']
+wf_steps = ['gen','sim','digi','hlt','reco','maod','naod']
 
 ul_base = 'ul_cfgs'
 
@@ -178,6 +187,7 @@ ul_cfg_map = {
             'hlt'  : os.path.join(ul_base,'UL16_HLT_cfg.py'),
             'reco' : os.path.join(ul_base,'UL16_RECO_cfg.py'),
             'maod' : os.path.join(ul_base,'UL16_MAOD_cfg.py'),
+            'naod' : os.path.join(ul_base,'UL16_NAOD_cfg.py'),
         }
     },
     'UL16APV' : {
@@ -187,6 +197,7 @@ ul_cfg_map = {
             'hlt'  : os.path.join(ul_base,'UL16APV_HLT_cfg.py'),
             'reco' : os.path.join(ul_base,'UL16APV_RECO_cfg.py'),
             'maod' : os.path.join(ul_base,'UL16APV_MAOD_cfg.py'),
+            'naod' : os.path.join(ul_base,'UL16APV_NAOD_cfg.py'),
         }
     },
     'UL17' : {
@@ -196,6 +207,7 @@ ul_cfg_map = {
             'hlt'  : os.path.join(ul_base,'UL17_HLT_cfg.py'),
             'reco' : os.path.join(ul_base,'UL17_RECO_cfg.py'),
             'maod' : os.path.join(ul_base,'UL17_MAOD_cfg.py'),
+            'naod' : os.path.join(ul_base,'UL17_NAOD_cfg.py'),
         }
     },
     'UL18' : {
@@ -205,77 +217,131 @@ ul_cfg_map = {
             'hlt'  : os.path.join(ul_base,'UL18_HLT_cfg.py'),
             'reco' : os.path.join(ul_base,'UL18_RECO_cfg.py'),
             'maod' : os.path.join(ul_base,'UL18_MAOD_cfg.py'),
+            'naod' : os.path.join(ul_base,'UL18_NAOD_cfg.py'),
         }
     }
 
 }
-gen_cfg_map = {
-    'ttHJet' : {
-        #'gen' : 'python_cfgs/GS/HIG-RunIIFall17wmGS-00000-ttHJets_1_cfg.py'
-        'gen': 'python_cfgs/GEN/GEN-00000-ttHJets_1_cfg.py',
+
+gen_ul_cfg_map = {
+    'UL16' : {
+        'ttHJet' : {
+            'gen': os.path.join(ul_base,'UL16_GEN_ttHJet_cfg.py'),
+        },
+        'ttlnuJet' : {
+            'gen': os.path.join(ul_base,'UL16_GEN_ttlnuJet_cfg.py'),
+        },
+        'ttllNuNuJetNoHiggs' : {
+            'gen': os.path.join(ul_base,'UL16_GEN_ttlnuJet_cfg.py'),
+        },
+        'tllq4fNoSchanWNoHiggs0p' : {
+            'gen': os.path.join(ul_base,'UL16_GEN_ttlnu_cfg.py'),
+        },
+        'tHq4f' : {
+            'gen': os.path.join(ul_base,'UL16_GEN_ttlnu_cfg.py'),
+        }
     },
-    'ttlnuJet' : {
-        #'gen' : 'python_cfgs/GS/HIG-RunIIFall17wmGS-00000-ttlnuJets_1_cfg.py',
-        'gen': 'python_cfgs/GEN/GEN-00000-ttlnuJets_1_cfg.py',
+    'UL16APV' : {
+        'ttHJet' : {
+            'gen': os.path.join(ul_base,'UL16APV_GEN_ttHJet_cfg.py'),
+        },
+        'ttlnuJet' : {
+            'gen': os.path.join(ul_base,'UL16APV_GEN_ttlnuJet_cfg.py'),
+        },
+        'ttllNuNuJetNoHiggs' : {
+            'gen': os.path.join(ul_base,'UL16APV_GEN_ttlnuJet_cfg.py'),
+        },
+        'tllq4fNoSchanWNoHiggs0p' : {
+            'gen': os.path.join(ul_base,'UL16APV_GEN_ttlnu_cfg.py'),
+        },
+        'tHq4f' : {
+            'gen': os.path.join(ul_base,'UL16APV_GEN_ttlnu_cfg.py'),
+        }
     },
-    'ttllNuNuJetNoHiggs' : {
-        #'gen' : 'python_cfgs/GS/HIG-RunIIFall17wmGS-00000-ttlnuJets_1_cfg.py',
-        'gen': 'python_cfgs/GEN/GEN-00000-ttlnuJets_1_cfg.py'
+    'UL17' : {
+        'ttHJet' : {
+            'gen': os.path.join(ul_base,'UL17_GEN_ttHJet_cfg.py'),
+        },
+        'ttlnuJet' : {
+            'gen': os.path.join(ul_base,'UL17_GEN_ttlnuJet_cfg.py'),
+        },
+        'ttllNuNuJetNoHiggs' : {
+            'gen': os.path.join(ul_base,'UL17_GEN_ttlnuJet_cfg.py'),
+        },
+        'tllq4fNoSchanWNoHiggs0p' : {
+            'gen': os.path.join(ul_base,'UL17_GEN_ttlnu_cfg.py'),
+        },
+        'tHq4f' : {
+            'gen': os.path.join(ul_base,'UL17_GEN_ttlnu_cfg.py'),
+        }
     },
-    'tllq4fNoSchanWNoHiggs0p' : {
-        #'gen' : 'python_cfgs/GS/HIG-RunIIFall17wmGS-00000-tllq4f_1_cfg.py',
-        'gen': 'python_cfgs/GEN/GEN-00000-tllq4f_1_cfg.py',
+    'UL18' : {
+        'ttHJet' : {
+            'gen': os.path.join(ul_base,'UL18_GEN_ttHJet_cfg.py'),
+        },
+        'ttlnuJet' : {
+            'gen': os.path.join(ul_base,'UL18_GEN_ttlnuJet_cfg.py'),
+        },
+        'ttllNuNuJetNoHiggs' : {
+            'gen': os.path.join(ul_base,'UL18_GEN_ttlnuJet_cfg.py'),
+        },
+        'tllq4fNoSchanWNoHiggs0p' : {
+            'gen': os.path.join(ul_base,'UL18_GEN_ttlnu_cfg.py'),
+        },
+        'tHq4f' : {
+            'gen': os.path.join(ul_base,'UL18_GEN_ttlnu_cfg.py'),
+        }
     },
-    'tHq4f' : {
-        #'gen' : 'python_cfgs/GS/HIG-RunIIFall17wmGS-00000-tllq4f_1_cfg.py',
-        'gen': 'python_cfgs/GEN/GEN-00000-tllq4f_1_cfg.py',
-    }
 }
 
 rel_map = {
     'UL16' : {
+        'gen' : 'CMSSW_10_6_19_patch3',
         'sim' : 'CMSSW_10_6_17_patch1',
         'digi': 'CMSSW_10_6_17_patch1',
         'hlt' : 'CMSSW_8_0_33_UL',
         'reco': 'CMSSW_10_6_17_patch1',
         'maod': 'CMSSW_10_6_20',
+        'naod': 'CMSSW_10_6_19_patch2',
     },
     'UL16APV' : {
-        #'gen' : 'CMSSW_10_6_12',
-        #'sim' : 'CMSSW_10_6_12',
-        #'digi': 'CMSSW_10_6_12',
-        #'hlt' : 'CMSSW_8_0_33_UL',
-        #'reco': 'CMSSW_10_6_12',
-        #'maod': 'CMSSW_10_6_12',
+        'gen' : 'CMSSW_10_6_19_patch3',
+        'sim' : 'CMSSW_10_6_17_patch1',
+        'digi': 'CMSSW_10_6_17_patch1',
+        'hlt' : 'CMSSW_8_0_33_UL',
+        'reco': 'CMSSW_10_6_17_patch1',
+        'maod': 'CMSSW_10_6_20',
+        'naod': 'CMSSW_10_6_19_patch2',
     },
     'UL17' : {
-        #'gen' : 'CMSSW_10_6_12',
-        #'sim' : 'CMSSW_10_6_2',
-        #'digi': 'CMSSW_10_6_2',
-        #'hlt' : 'CMSSW_9_4_14_UL_patch1',
-        #'reco': 'CMSSW_10_6_2',
-        #'maod': 'CMSSW_10_6_2',
+        'gen' : 'CMSSW_10_6_19_patch3',
+        'sim' : 'CMSSW_10_6_17_patch1',
+        'digi': 'CMSSW_10_6_17_patch1',
+        'hlt' : 'CMSSW_9_4_14_UL_patch1',
+        'reco': 'CMSSW_10_6_17_patch1',
+        'maod': 'CMSSW_10_6_20',
+        'naod': 'CMSSW_10_6_19_patch2',
     },
     'UL18' : {
-        #'gen' : 'CMSSW_10_6_12',
-        #'sim' : 'CMSSW_10_6_4_patch1',
-        #'digi': 'CMSSW_10_6_4_patch1',
-        #'hlt' : 'CMSSW_10_2_16_UL',
-        #'reco': 'CMSSW_10_6_4_patch1',
-        #'maod': 'CMSSW_10_6_4_patch1',
+        'gen' : 'CMSSW_10_6_19_patch3',
+        'sim' : 'CMSSW_10_6_17_patch1',
+        'digi': 'CMSSW_10_6_17_patch1',
+        'hlt' : 'CMSSW_10_2_16_UL',
+        'reco': 'CMSSW_10_6_17_patch1',
+        'maod': 'CMSSW_10_6_20',
+        'naod': 'CMSSW_10_6_19_patch2',
     },
 
 }
 
+# Put the gen configs into the ul cfg map
 fragment_map = ul_cfg_map[UL_YEAR]
-for k,v in gen_cfg_map.iteritems():
+for k,v in gen_ul_cfg_map[UL_YEAR].iteritems():
     fragment_map[k] = v
 
-print("Fragement map!")
-for k,v in fragment_map.iteritems():
-    print k,":",v
-
-# Note: These changes will be applied to every process in the run
+#print("Fragement map!")
+#for k,v in fragment_map.iteritems():
+    #print k,":",v
 
 gs_mods_dict = {}
 
@@ -286,11 +352,13 @@ gs_mods_dict["base"]["base"] = []
 #gs_mods_dict["ttHJet"]['qCut19'] = ['s|JetMatching:qCut = 19|JetMatching:qCut = 19|g']
 #gs_mods_dict["ttHJet"]['qCut25'] = ['s|JetMatching:qCut = 19|JetMatching:qCut = 25|g']
 
-gs_mods_dict["tllq4fNoSchanWNoHiggs0p"] = {}
-gs_mods_dict["tllq4fNoSchanWNoHiggs0p"]['MatchOff'] = ['s|JetMatching:merge = on|JetMatching:merge = off|g']
+# Don't need to turn off matching for single top samples since using cfg with matching already turned off
+#gs_mods_dict["tllq4fNoSchanWNoHiggs0p"] = {}
+#gs_mods_dict["tllq4fNoSchanWNoHiggs0p"]['MatchOff'] = ['s|JetMatching:merge = on|JetMatching:merge = off|g']
 
-gs_mods_dict["tHq4f"] = {}
-gs_mods_dict["tHq4f"]['MatchOff'] = ['s|JetMatching:merge = on|JetMatching:merge = off|g']
+# Don't need to turn off matching for single top samples since using cfg with matching already turned off
+#gs_mods_dict["tHq4f"] = {}
+#gs_mods_dict["tHq4f"]['MatchOff'] = ['s|JetMatching:merge = on|JetMatching:merge = off|g']
 
 wf = []
 
@@ -300,7 +368,7 @@ for idx,lhe_dir in enumerate(lhe_dirs):
     head,tail = os.path.split(lhe_dir)
     arr = tail.split('_')
     p,c,r = arr[2],arr[3],arr[4]
-    print("p c r:",p,c,r)
+    #print("p c r:",p,c,r)
     if p in gs_mods_dict:
         gs_mods = gs_mods_dict[p]
     else:
@@ -329,16 +397,15 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             wf_fragments[step] = mod_loc
         if mod_tag == 'base': mod_tag = ''
         label_tag = "{p}_{c}{mod}_{r}".format(p=p,c=c,r=r,mod=mod_tag)
-        print "\t\tLabel: {label}".format(label=label_tag)
 
         print "\nThis is the wf_fragments:",wf_fragments,"\n"
 
         gen = Workflow(
             label='gen_step_{tag}'.format(tag=label_tag),
             command='cmsRun {cfg}'.format(cfg=wf_fragments['gen']),
-            sandbox=cmssw.Sandbox(release='CMSSW_9_3_6'),
+            sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['gen']),
             merge_size=-1,  # Don't merge files we don't plan to keep
-            cleanup_input=False,
+            cleanup_input=False, # Do not accidently clean up the LHE files!!!
             globaltag=False,
             outputs=['GEN-00000.root'],
             dataset=Dataset(
@@ -355,7 +422,7 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['sim']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['sim']),
             merge_size=-1,  # Don't merge files we don't plan to keep
-            cleanup_input=False,
+            cleanup_input=True,
             globaltag=False,
             outputs=['SIM-00000.root'],
             dataset=ParentDataset(
@@ -370,7 +437,7 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['digi']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['digi']),
             merge_size=-1,  # Don't merge files we don't plan to keep
-            cleanup_input=True,    # Save the GEN-SIM step
+            cleanup_input=True,
             outputs=['DIGI-00000.root'],
             dataset=ParentDataset(
                 parent=sim,
@@ -384,7 +451,7 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['hlt']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['hlt']),
             merge_size=-1, # Don't merge files we don't plan to keep
-            cleanup_input=False, # ???
+            cleanup_input=True,
             outputs=['HLT-00000'],
             dataset=ParentDataset(
                 parent=digi,
@@ -421,8 +488,23 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             category=maod_resources
         )
 
-        wf.extend([gen,sim,digi,hlt,reco,maod])
-        #wf.extend([gen])
+        # No idea about these settings... just go with same as maod?
+        naod = Workflow(
+            label='nAOD_step_{tag}'.format(tag=label_tag),
+            command='cmsRun {cfg}'.format(cfg=wf_fragments['naod']),
+            sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['naod']),
+            merge_size='256M',
+            cleanup_input=False,
+            outputs=['NAOD-00000.root'],
+            dataset=ParentDataset(
+                parent=maod,
+                units_per_task=3
+            ),
+            category=naod_resources
+        )
+
+        #wf.extend([gen,sim,digi,hlt,reco,maod])
+        wf.extend([gen,sim,digi,hlt,reco,maod,naod])
 
 config = Config(
     label=master_label,
