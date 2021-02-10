@@ -8,19 +8,26 @@ from lobster import cmssw
 from lobster.core import AdvancedOptions, Category, Config, MultiProductionDataset, StorageConfiguration, Workflow
 
 #sys.path.append(os.getcwd())
-sys.path.append('/afs/crc.nd.edu/user/a/awightma/Public/git_repos/mgprod/lobster_workflow')
+#sys.path.append('/afs/crc.nd.edu/user/a/awightma/Public/git_repos/mgprod/lobster_workflow')
 from helpers.utils import regex_match
 
 timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 
 #events_per_gridpack = 5e6
-events_per_gridpack = 200e3
+events_per_gridpack = 100e3
 events_per_lumi = 500
 
 #RUN_SETUP = 'local'
 #RUN_SETUP = 'full_production'
-RUN_SETUP = 'mg_studies'
-#RUN_SETUP = 'lobster_test'
+#RUN_SETUP = 'mg_studies'
+RUN_SETUP = 'lobster_test'
+
+#UL_YEAR = 'UL16'
+#UL_YEAR = 'UL16APV'
+UL_YEAR = 'UL17'
+#UL_YEAR = 'UL18'
+if ((UL_YEAR != 'UL16') and (UL_YEAR != 'UL16APV') and (UL_YEAR != 'UL17') and (UL_YEAR != 'UL18')):
+    UL_YEAR = "NONE"
 
 version = "v1"
 grp_tag = "FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4"
@@ -202,12 +209,12 @@ gridpack_list = [
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttbarJet_newGenProdCheckTTBARv5dim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check ttbar for bkg dependence on WCs
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttbarJet_newGenProdCheckTTBARv5dim6TopMay20GST_run3_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check ttbar for bkg dependence on WCs
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testUpdateGenprodMG260dim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                   # Check new model and new genprod framework BUT with MG 260
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testUpdateGenprodMG260dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check new model and new genprod framework BUT with MG 260
+    "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testUpdateGenprodMG260dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check new model and new genprod framework BUT with MG 260
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testUpdateGenprodMG260dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                  # Check new model and new genprod framework BUT with MG 260
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttlnuJet_testUpdateGenprodMG260dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                # Check new model and new genprod framework BUT with MG 260
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttllNuNuJetNoHiggs_testUpdateGenprodMG260dim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",      # Check new model and new genprod framework BUT with MG 260
-    "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprodHanV4_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",                             # tHq check with old genprod and HanV4 (Has issue with FCNC=0 twice in proc card)
-    "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprodHanV4WithoutExtraFCNC0InProcCard_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",  # tHq check with old genprod and HanV4
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprodHanV4_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",                             # tHq check with old genprod and HanV4 (Has issue with FCNC=0 twice in proc card)
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprodHanV4WithoutExtraFCNC0InProcCard_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",  # tHq check with old genprod and HanV4
 
 
 ]
@@ -243,6 +250,20 @@ wf_steps = ['lhe']
 fragment_map = {
     'default': {
         'lhe': 'python_cfgs/LHE/HIG-RunIIFall17wmLHE-00000_1_cfg.py',
+    },
+}
+ul_fragment_map = {
+    'UL16' : {
+        'lhe' : 'ul_cfgs/UL16_LHE_cfg.py',
+    },
+    'UL16APV' : {
+        'lhe' : 'ul_cfgs/UL16APV_LHE_cfg.py',
+    },
+    'UL17' : {
+        'lhe' : 'ul_cfgs/UL17_LHE_cfg.py',
+    },
+    'UL18' : {
+        'lhe' : 'ul_cfgs/UL18_LHE_cfg.py',
     },
 }
 
@@ -286,23 +307,32 @@ for idx,gridpack in enumerate(gridpack_list):
 
     wf_fragments = {}
     for step in wf_steps:
-        if fragment_map.has_key(p) and fragment_map[p].has_key(step):
-            wf_fragments[step] = fragment_map[p][step]
+        if (UL_YEAR == "NONE"):
+            if fragment_map.has_key(p) and fragment_map[p].has_key(step):
+                wf_fragments[step] = fragment_map[p][step]
+            else:
+                wf_fragments[step] = fragment_map['default'][step]
         else:
-            wf_fragments[step] = fragment_map['default'][step]
+            wf_fragments[step] = ul_fragment_map[UL_YEAR][step]
+    #print wf_fragments
     multiplier = event_multiplier['default']
     if event_multiplier.has_key(p):
         multiplier = event_multiplier[p]
     nevents = int(multiplier*events_per_gridpack)
     print "\t[{0}/{1}] Gridpack: {gp} (nevts {events})".format(idx+1,len(gridpack_list),gp=gridpack,events=nevents)
+    if (UL_YEAR == "NONE"):
+        rel = 'CMSSW_9_3_1'
+    else:
+        rel = 'CMSSW_10_6_19_patch3'
     lhe = Workflow(
         label=label,
         command='cmsRun {cfg}'.format(cfg=wf_fragments['lhe']),
-        sandbox=cmssw.Sandbox(release='CMSSW_9_3_1'),
+        sandbox=cmssw.Sandbox(release=rel),
         merge_size=-1,  # Don't merge the output files, to keep individuals as small as possible
         cleanup_input=False,
         globaltag=False,
-        outputs=['HIG-RunIIFall17wmLHE-00000ND.root'],
+        #outputs=['HIG-RunIIFall17wmLHE-00000ND.root'],
+        outputs=['LHE-00000.root'],
         dataset=MultiProductionDataset(
             gridpacks=gridpack,
             events_per_gridpack=nevents,
