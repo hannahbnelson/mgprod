@@ -30,8 +30,15 @@ if ((UL_YEAR != 'UL16') and (UL_YEAR != 'UL16APV') and (UL_YEAR != 'UL17') and (
     UL_YEAR = "NONE"
 
 version = "v1"
-grp_tag = "FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4"
+#grp_tag = "FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4"
+#grp_tag = "FullR2Studies/ULChecks/ttH-ttHJet_dim6TopMay20GST_JustctGctp-check-dim6syntaxes_"
+grp_tag = "FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testHiggsInterferenceWithLL_"
 prod_tag = ""
+
+if (UL_YEAR != "NONE"):
+    grp_tag = grp_tag + UL_YEAR
+
+print grp_tag
 
 # Only run over gridpacks from specific processes/coeffs/runs
 #process_whitelist = ['^ttllNuNuNoHiggs$','^ttH$','^ttlnu$']
@@ -209,13 +216,44 @@ gridpack_list = [
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttbarJet_newGenProdCheckTTBARv5dim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check ttbar for bkg dependence on WCs
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttbarJet_newGenProdCheckTTBARv5dim6TopMay20GST_run3_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check ttbar for bkg dependence on WCs
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testUpdateGenprodMG260dim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                   # Check new model and new genprod framework BUT with MG 260
-    "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testUpdateGenprodMG260dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check new model and new genprod framework BUT with MG 260
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testUpdateGenprodMG260dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check new model and new genprod framework BUT with MG 260
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testUpdateGenprodMG260dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                  # Check new model and new genprod framework BUT with MG 260
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttlnuJet_testUpdateGenprodMG260dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                # Check new model and new genprod framework BUT with MG 260
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttllNuNuJetNoHiggs_testUpdateGenprodMG260dim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",      # Check new model and new genprod framework BUT with MG 260
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprodHanV4_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",                             # tHq check with old genprod and HanV4 (Has issue with FCNC=0 twice in proc card)
     #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprodHanV4WithoutExtraFCNC0InProcCard_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",  # tHq check with old genprod and HanV4
-
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6SQdim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",  # check dim6^2<=2 syntax
+    ##"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6EQ2dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # check dim6=2 (should be wrong)
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6SQdim6TopECOMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttlnuJet_testDIM6SQdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testDIM6SQdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    ##"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testDIM6SQdim6TopECOMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Gridpack fails in LHE step, something wrong with gridpack
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testDIM6SQdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testDIM6SQdim6TopECOMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6EQ1dim6TopMay20GSTStartPtChecks_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6SQdim6TopMay20GSTStartPtChecks_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testV2DIM6SQdim6TopMay20GSTStartPtChecks_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6SQdim6TopMay20GSTStartPtChecks_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6EQ1dim6TopMay20GSTStartPtChecks_run3_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6SQdim6TopMay20GSTStartPtChecks_run3_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6EQ1dim6TopMay20GSTStartPtChecks_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6EQ1dim6TopMay20GSTStartPtChecks_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testctG0DIM6SQdim6TopMay20GSTStartPtChecks_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testctG0DIM6SQdim6TopMay20GSTStartPtChecks_run3_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttH_testV2JustctGctpDIM6EQ1dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",    # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttH_testV2JustctGctpDIM6SQdim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",     # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttH_testV2JustctGctpDIM6EQ1dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",    # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttH_testV2JustctGctpDIM6SQdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",     # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testV2JustctGctpDIM6EQ1dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testV2JustctGctpDIM6EQ1dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testV2JustctGctpDIM6SQdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",  # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
+    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testV2JustctGctpDIM6SQdim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",  # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
+    "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanW_testHiggsInterferenceWithlldim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",          # Checking if ok to seperate H and ll processes
+    "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHTOllq4fNoSchanW_testHiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",       # Checking if ok to seperate H and ll processes
+    "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testHiggsInterferenceWithlldim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Checking if ok to seperate H and ll processes
+    "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttll_testHiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                    # Checking if ok to seperate H and ll processes
+    "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHTOll_testHiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                 # Checking if ok to seperate H and ll processes
+    "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttllNoHiggs_testHiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",             # Checking if ok to seperate H and ll processes
 
 ]
 
@@ -268,16 +306,16 @@ ul_fragment_map = {
 }
 
 event_multiplier = {
-    'default': 1,
-    'ttHJet': 4,
-    'ttHjet': 4,
-    'ttlnuJet': 2,
-    'ttWJet': 2,
+    'default': 1.0,
+    'ttHJet': 3.5,
+    'ttHjet': 3.5,
+    'ttlnuJet': 2.2,
+    'ttWJet': 2.2,
     'tHq4fMatched': 1.2,
     'tllq4fMatchedNoHiggs': 1.2,
-    'tllqJet5fNoSchanWNoHiggs':4,
-    'ttllNuNuJetNoHiggs': 4,
-    'ttZJet': 4,
+    'tllqJet5fNoSchanWNoHiggs':4.0,
+    'ttllNuNuJetNoHiggs': 3.7,
+    'ttZJet': 3.7,
     'ttbarJet':3.5,
 }
 
