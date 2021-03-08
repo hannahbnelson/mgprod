@@ -14,17 +14,17 @@ timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 input_path = "/store/user/"
 input_path_full = "/hadoop" + input_path
 
-master_label = 'EFT_ALL_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
+master_label = 'EFT_ALL_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
 
 ########## Set up the lobster cfg ##########
 
 # Note: Should not have to modify things outside of this section, unless you want to:
-#    - Hardcode lhe dirs
+#    - Hardcode lhe dirs to use
 #    - Modify gen cfgs
 
 # Specify what kind of output to make
-STEPS = 'throughGEN'
-#STEPS = 'throughNAOD'
+#STEPS = 'throughGEN'
+STEPS = 'throughNAOD'
 
 # Specfy the run setup
 #RUN_SETUP = 'full_production'
@@ -32,15 +32,20 @@ STEPS = 'throughGEN'
 RUN_SETUP = 'testing'
 
 # Specify the UL year
-UL_YEAR = 'UL16'
+#UL_YEAR = 'UL16'
 #UL_YEAR = 'UL16APV'
-#UL_YEAR = 'UL17'
+UL_YEAR = 'UL17'
 #UL_YEAR = 'UL18'
 
 # Name the output
-out_ver = "v1"   # The version index for the OUTPUT directory
-out_tag = "2019_04_19/TEST"
+out_ver = "v4"   # The version index for the OUTPUT directory
+#out_tag = "FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_GEN_ULCheck"
+out_tag = "FullR2Studies/ULChecks/ttXJet-tXq_testFullULWFonCRC_ULCheck_"
+#out_tag = "FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testHiggsInterferenceWithLL_GEN_"
 
+
+# Append UL year to out tag
+out_tag = out_tag + UL_YEAR
 
 # Only run over lhe steps from specific processes/coeffs/runs
 process_whitelist = []
@@ -49,10 +54,19 @@ runs_whitelist    = []  # (i.e. MG starting points)
 
 # Specify the input directories. Note: The workflows in each of the input directories should all be uniquely named w.r.t each other
 input_dirs = [
-    os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL16/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL16/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL16APV/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL17/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL18/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL16/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL16APV/v1"),
+    os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL18/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttHJet_dim6TopMay20GST-checkDIM6Syntaxes_UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_dim6TopMay20GST-and-ECO_checkDIM6SQSyntax_UL17/v2"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttHJet_dim6TopMay20GST-StartPtChecks_UL17/v2"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttH-ttHJet_dim6TopMay20GST_JustctGctp-check-dim6syntaxes_UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testHiggsInterferenceWithLL_UL17/v2"),
 ]
 
 
@@ -136,7 +150,7 @@ storage = StorageConfiguration(
 gen_resources = Category(
     name='gen',
     cores=1,
-    memory=600,
+    memory=2000,
     disk=1000,
     tasks_min=12,
     tasks_max=3000,
@@ -160,28 +174,28 @@ digi_resources = Category(
 hlt_resources = Category(
     name='hlt',
     cores=2,
-    memory=3000,
+    memory=5000,
     disk=6000,
     mode='fixed'
 )
 reco_resources = Category(
     name='reco',
     cores=3,
-    memory=3500,
+    memory=5000,
     disk=3000,
     mode='fixed'
 )
 maod_resources = Category(
     name='maod',
     cores=2,
-    memory=2500,
+    memory=3500,
     disk=2000,
     mode='fixed'
 )
 naod_resources = Category(
     name='naod',
     cores=2,
-    memory=2500,
+    memory=3500,
     disk=2000,
     mode='fixed'
 )
@@ -364,6 +378,10 @@ gs_mods_dict["base"]["base"] = []
 #gs_mods_dict["ttHJet"]['qCut15'] = ['s|JetMatching:qCut = 19|JetMatching:qCut = 15|g']
 #gs_mods_dict["ttHJet"]['qCut19'] = ['s|JetMatching:qCut = 19|JetMatching:qCut = 19|g']
 #gs_mods_dict["ttHJet"]['qCut25'] = ['s|JetMatching:qCut = 19|JetMatching:qCut = 25|g']
+gs_mods_dict["ttH"] = {}
+gs_mods_dict["ttH"]["MatchOff"] = ['s|JetMatching:merge = on|JetMatching:merge = off|g']
+gs_mods_dict["ttHTOll"] = {}
+gs_mods_dict["ttHTOll"]["MatchOff"] = ['s|JetMatching:merge = on|JetMatching:merge = off|g']
 
 
 ########## Generate workflows ##########
@@ -389,7 +407,14 @@ for idx,lhe_dir in enumerate(lhe_dirs):
         wf_fragments = {}
         for step in wf_steps:
             if step == 'gen':
-                template_loc = fragment_map[p][step]
+                if (p=="ttH" or p=="ttHTOll"): # We don't have a ttH UL config, but can just use ttHJet if we turn off matching
+                    template_loc = fragment_map["ttHJet"][step]
+                elif (p=="ttll" or p=="ttllNoHiggs"): # We don't have a ttll config, but can just use the ttlnu one (since matching already off)
+                    template_loc = fragment_map["tllq4fNoSchanWNoHiggs0p"][step]
+                elif (p=="tHTOllq4fNoSchanW" or p=="tllq4fNoSchanW"): # We don't have thest singe top configs but just use tllnu one (since matching already off)
+                    template_loc = fragment_map["tllq4fNoSchanWNoHiggs0p"][step]
+                else:
+                    template_loc = fragment_map[p][step]
             else:
                 template_loc = fragment_map["all_procs"][step]
             # Only the GEN step can be modified
@@ -431,7 +456,8 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['sim']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['sim']),
             merge_size=-1,  # Don't merge files we don't plan to keep
-            cleanup_input=True,
+            #cleanup_input=True,
+            cleanup_input=False,
             globaltag=False,
             outputs=['SIM-00000.root'],
             dataset=ParentDataset(
@@ -446,7 +472,8 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['digi']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['digi']),
             merge_size=-1,  # Don't merge files we don't plan to keep
-            cleanup_input=True,
+            #cleanup_input=True,
+            cleanup_input=False,
             outputs=['DIGI-00000.root'],
             dataset=ParentDataset(
                 parent=sim,
@@ -460,7 +487,8 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['hlt']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['hlt']),
             merge_size=-1, # Don't merge files we don't plan to keep
-            cleanup_input=True,
+            #cleanup_input=True,
+            cleanup_input=False,
             outputs=['HLT-00000'],
             dataset=ParentDataset(
                 parent=digi,
@@ -474,7 +502,8 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['reco']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['reco']),
             merge_size=-1,  # Don't merge files we don't plan to keep
-            cleanup_input=True,
+            #cleanup_input=True,
+            cleanup_input=False,
             outputs=['RECO-00000.root'],
             dataset=ParentDataset(
                 parent=hlt,
@@ -488,7 +517,8 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['maod']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['maod']),
             merge_size='256M',
-            cleanup_input=True,
+            #cleanup_input=True,
+            cleanup_input=False,
             outputs=['MAOD-00000.root'],
             dataset=ParentDataset(
                 parent=reco,
