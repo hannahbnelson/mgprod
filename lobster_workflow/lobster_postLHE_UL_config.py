@@ -14,7 +14,9 @@ timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 input_path = "/store/user/"
 input_path_full = "/hadoop" + input_path
 
-master_label = 'EFT_ALL_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
+#master_label = 'EFT_ALL_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
+#master_label = 'EFT_ALL_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
+master_label = 'EFT_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 
 ########## Set up the lobster cfg ##########
 
@@ -23,13 +25,13 @@ master_label = 'EFT_ALL_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
 #    - Modify gen cfgs
 
 # Specify what kind of output to make
-#STEPS = 'throughGEN'
-STEPS = 'throughNAOD'
+STEPS = 'throughGEN'
+#STEPS = 'throughNAOD'
 
 # Specfy the run setup
 #RUN_SETUP = 'full_production'
-#RUN_SETUP = 'mg_studies'
-RUN_SETUP = 'testing'
+RUN_SETUP = 'mg_studies'
+#RUN_SETUP = 'testing'
 
 # Specify the UL year
 #UL_YEAR = 'UL16'
@@ -38,10 +40,10 @@ UL_YEAR = 'UL17'
 #UL_YEAR = 'UL18'
 
 # Name the output
-out_ver = "v4"   # The version index for the OUTPUT directory
+out_ver = "v1"   # The version index for the OUTPUT directory
 #out_tag = "FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_GEN_ULCheck"
-out_tag = "FullR2Studies/ULChecks/ttXJet-tXq_testFullULWFonCRC_ULCheck_"
-#out_tag = "FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testHiggsInterferenceWithLL_GEN_"
+out_tag = "FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheckV2_GEN_"
+#out_tag = "ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_GEN_"
 
 
 # Append UL year to out tag
@@ -60,13 +62,23 @@ input_dirs = [
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL18/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL16/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL16APV/v1"),
-    os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL17/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL18/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttHJet_dim6TopMay20GST-checkDIM6Syntaxes_UL17/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_dim6TopMay20GST-and-ECO_checkDIM6SQSyntax_UL17/v2"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttHJet_dim6TopMay20GST-StartPtChecks_UL17/v2"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttH-ttHJet_dim6TopMay20GST_JustctGctp-check-dim6syntaxes_UL17/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testHiggsInterferenceWithLL_UL17/v2"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testV2HiggsInterferenceWithLL_UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testBothSetsOfSamplesTogetherHiggsInterferenceWithLL_UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testBothSetsOfSamplesTogetherHiggsInterferenceWithLL-rerunLHE_UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttHTOll_testHiggsInterferenceWithllWithMMLL10dim6TopMay20GST_UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-tllq-tHq_dim6TopMay20GST_all22WCsBaselineStartPtTOP19001_UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/ForPhenoJhepReviewStudies/ttW-ttWJet_cbW-cptb-1dChecks_dim6TopMay20GST_UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttllJet-ttbarJet_dim6TopMay20GST_all22WCsBaselineStartPtTOP19001_UL17/v1"),
+    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttXJet-tXq-ttbarJet_dim6TopMay20GST_all22WCsDim6Eq0_UL17/v1"),
+    os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheckV2_UL17/v1"),
 ]
 
 
@@ -374,10 +386,10 @@ gs_mods_dict = {}
 gs_mods_dict["base"] = {}
 gs_mods_dict["base"]["base"] = []
 # Example of q cut variation
-#gs_mods_dict["ttHJet"] = {}
-#gs_mods_dict["ttHJet"]['qCut15'] = ['s|JetMatching:qCut = 19|JetMatching:qCut = 15|g']
-#gs_mods_dict["ttHJet"]['qCut19'] = ['s|JetMatching:qCut = 19|JetMatching:qCut = 19|g']
-#gs_mods_dict["ttHJet"]['qCut25'] = ['s|JetMatching:qCut = 19|JetMatching:qCut = 25|g']
+gs_mods_dict["ttZJet"] = {}
+gs_mods_dict["ttZJet"]['qCut15'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 15.|g']
+gs_mods_dict["ttZJet"]['qCut19'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 19.|g']
+gs_mods_dict["ttZJet"]['qCut25'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 25.|g']
 gs_mods_dict["ttH"] = {}
 gs_mods_dict["ttH"]["MatchOff"] = ['s|JetMatching:merge = on|JetMatching:merge = off|g']
 gs_mods_dict["ttHTOll"] = {}
@@ -409,10 +421,12 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             if step == 'gen':
                 if (p=="ttH" or p=="ttHTOll"): # We don't have a ttH UL config, but can just use ttHJet if we turn off matching
                     template_loc = fragment_map["ttHJet"][step]
-                elif (p=="ttll" or p=="ttllNoHiggs"): # We don't have a ttll config, but can just use the ttlnu one (since matching already off)
+                elif (p=="ttll" or p=="ttllNoHiggs" or p=="ttW"): # We don't have a ttll config, but can just use the ttlnu one (since matching already off)
                     template_loc = fragment_map["tllq4fNoSchanWNoHiggs0p"][step]
                 elif (p=="tHTOllq4fNoSchanW" or p=="tllq4fNoSchanW"): # We don't have thest singe top configs but just use tllnu one (since matching already off)
                     template_loc = fragment_map["tllq4fNoSchanWNoHiggs0p"][step]
+                elif (p=="ttWJet" or p=="ttZJet" or p=="ttbarJet"):
+                    template_loc = fragment_map["ttlnuJet"][step]
                 else:
                     template_loc = fragment_map[p][step]
             else:
