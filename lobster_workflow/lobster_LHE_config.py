@@ -13,13 +13,13 @@ from helpers.utils import regex_match
 
 timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 
-#events_per_gridpack = 5e6
-events_per_gridpack = 100e3
+events_per_gridpack = 5e6
+#events_per_gridpack = 100e3
 events_per_lumi = 500
 
 #RUN_SETUP = 'local'
-#RUN_SETUP = 'full_production'
-RUN_SETUP = 'mg_studies'
+RUN_SETUP = 'full_production'
+#RUN_SETUP = 'mg_studies'
 #RUN_SETUP = 'lobster_test'
 
 #UL_YEAR = 'UL16'
@@ -32,9 +32,10 @@ if ((UL_YEAR != 'UL16') and (UL_YEAR != 'UL16APV') and (UL_YEAR != 'UL17') and (
 version = "v1"
 #grp_tag = "FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4"
 #grp_tag = "FullR2Studies/ULChecks/ttH-ttHJet_dim6TopMay20GST_JustctGctp-check-dim6syntaxes_"
-grp_tag = "FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_"
+grp_tag = "FullR2Studies/ValidationChecks/ttbarJet_dim6TopMay20GST_1dAxisScans-2heavy-2heavy2light_"
 #grp_tag = "ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_"
-prod_tag = ""
+
+prod_tag = "Round1/Batch1"
 
 if (UL_YEAR != "NONE"):
     grp_tag = grp_tag + UL_YEAR
@@ -46,7 +47,7 @@ print grp_tag
 #coeff_whitelist   = ['^NoDim6$']
 #runs_whitelist    = ['^run0$']    # (i.e. MG starting points)
 process_whitelist = []
-coeff_whitelist   = ["all22WCsStartPtCheckdim6TopMay20GST"]
+coeff_whitelist   = []
 runs_whitelist    = []    # (i.e. MG starting points)
 
 master_label = 'EFT_T3_{tstamp}'.format(tstamp=timestamp_tag)
@@ -71,9 +72,9 @@ if RUN_SETUP == 'mg_studies':
     plotdir_path = "~/www/lobster/LHE_step/{tag}/{ver}".format(tag=grp_tag,ver=version)
 elif RUN_SETUP == 'full_production':
     # For Large MC production
-    output_path  = "/store/user/$USER/FullProduction/{tag}/LHE_step/{ver}".format(tag=prod_tag,ver=version)
-    workdir_path = "/tmpscratch/users/$USER/FullProduction/{tag}/LHE_step/{ver}".format(tag=prod_tag,ver=version)
-    plotdir_path = "~/www/lobster/FullProduction/{tag}/LHE_step/{ver}".format(tag=prod_tag,ver=version)
+    output_path  = "/store/user/$USER/FullProduction/FullR2/{ul}/{tag}/LHE_step/{ver}".format(ul=UL_YEAR,tag=prod_tag,ver=version)
+    workdir_path = "/tmpscratch/users/$USER/FullProduction/FullR2/{ul}/{tag}/LHE_step/{ver}".format(ul=UL_YEAR,tag=prod_tag,ver=version)
+    plotdir_path = "~/www/lobster/FullProduction/FullR2/{ul}/{tag}/LHE_step/{ver}".format(ul=UL_YEAR,tag=prod_tag,ver=version)
 elif RUN_SETUP == 'lobster_test':
     # For lobster workflow tests
     grp_tag = "lobster_{tstamp}".format(tstamp=timestamp_tag)
@@ -287,6 +288,12 @@ gridpack_list = [
     #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tHq4f_all22WCsDim6Eq0dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                   # SM
     #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttllNuNuJetNoHiggs_all22WCsDim6Eq0dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",      # SM
     #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttHJet_all22WCsDim6Eq0dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                  # SM
+    ###  Full Run 2 FP samples ###
+    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttHJet_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttlnuJet_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttllNuNuJetNoHiggs_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tllq4fNoSchanWNoHiggs0p_all22WCsStartPtCheckV2dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tHq4f_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
     ### Pheno paper JHEP review studies ###
     #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttW_cbWCheck1dForPhenodim6TopMay20GSTAxisScan_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
     #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttW_cbWCheck1dForPhenodim6TopMay20GSTAxisScan_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
@@ -302,33 +309,44 @@ gridpack_list = [
     #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttWJet_cbWCheck1dForPhenodim6TopMay20GSTAxisScan_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
 ]
 
-## This block is usually comented, use for specifying multiple gridpacks:
-##hardcoded_dir = "/hadoop/store/user/kmohrman/gridpack_scans/2020_08_05_ttV_startPtChecks"
-##hardcoded_base_dir = "kmohrman/gridpack_scans/2020_08_05_ttV_startPtChecks/"
-#hardcoded_dir = "/hadoop/store/user/kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies"
-#hardcoded_base_dir = "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/"
-hardcoded_dir = "/hadoop/store/user/kmohrman/gridpack_scans/FullR2Studies/ValidationChecks"
-hardcoded_rel_dir = "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/"
-gridpacks = []
-##for f in os.listdir(input_path_full):
-##for gp_dir in gridpack_list:
-for gp_dir in os.listdir(hardcoded_dir):
-    path_to_gp, gp = os.path.split(gp_dir)
-    #arr = f.split('_')
-    arr = gp.split('_')
-    if len(arr) < 3:
-        continue
-    p,c,r = arr[0],arr[1],arr[2]
-    if len(regex_match([p],process_whitelist)) == 0:
-        continue
-    elif len(regex_match([c],coeff_whitelist)) == 0:
-        continue
-    elif len(regex_match([r],runs_whitelist)) == 0:
-        continue
-    #gridpacks.append(f)
-    #gridpacks.append(hardcoded_base_dir+gp)
-    gridpacks.append(os.path.join(hardcoded_rel_dir,gp))
-gridpack_list = gridpacks
+FullR2_gridpack_list = [
+    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttHJet_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttlnuJet_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttllNuNuJetNoHiggs_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tllq4fNoSchanWNoHiggs0p_all22WCsStartPtCheckV2dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tHq4f_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+]
+
+if RUN_SETUP == 'full_production':
+    gridpack_list = FullR2_gridpack_list
+
+### This block is usually comented, use for specifying multiple gridpacks:
+###hardcoded_dir = "/hadoop/store/user/kmohrman/gridpack_scans/2020_08_05_ttV_startPtChecks"
+###hardcoded_base_dir = "kmohrman/gridpack_scans/2020_08_05_ttV_startPtChecks/"
+##hardcoded_dir = "/hadoop/store/user/kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies"
+##hardcoded_base_dir = "kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/"
+#hardcoded_dir = "/hadoop/store/user/kmohrman/gridpack_scans/FullR2Studies/ValidationChecks_1dScans"
+#hardcoded_rel_dir = "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks_1dScans/"
+#gridpacks = []
+###for f in os.listdir(input_path_full):
+###for gp_dir in gridpack_list:
+#for gp_dir in os.listdir(hardcoded_dir):
+#    path_to_gp, gp = os.path.split(gp_dir)
+#    #arr = f.split('_')
+#    arr = gp.split('_')
+#    if len(arr) < 3:
+#        continue
+#    p,c,r = arr[0],arr[1],arr[2]
+#    if len(regex_match([p],process_whitelist)) == 0:
+#        continue
+#    elif len(regex_match([c],coeff_whitelist)) == 0:
+#        continue
+#    elif len(regex_match([r],runs_whitelist)) == 0:
+#        continue
+#    #gridpacks.append(f)
+#    #gridpacks.append(hardcoded_base_dir+gp)
+#    gridpacks.append(os.path.join(hardcoded_rel_dir,gp))
+#gridpack_list = gridpacks
 
 # Note: The tllq4fMatchedNoSchanW gridpacks seem to require ~2600 MB disk
 
@@ -362,8 +380,8 @@ event_multiplier = {
     'tHq4fMatched': 1.2,
     'tllq4fMatchedNoHiggs': 1.2,
     'tllqJet5fNoSchanWNoHiggs':4.0,
-    'ttllNuNuJetNoHiggs': 3.7,
-    'ttZJet': 3.7,
+    'ttllNuNuJetNoHiggs': 3.5,
+    'ttZJet': 3.5,
     'ttbarJet':4.1,
 }
 

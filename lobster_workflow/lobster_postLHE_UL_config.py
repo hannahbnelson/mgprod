@@ -14,7 +14,7 @@ timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 input_path = "/store/user/"
 input_path_full = "/hadoop" + input_path
 
-#master_label = 'EFT_ALL_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
+#master_label = 'EFT_CRC_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
 #master_label = 'EFT_ALL_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 master_label = 'EFT_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 
@@ -42,8 +42,9 @@ UL_YEAR = 'UL17'
 # Name the output
 out_ver = "v1"   # The version index for the OUTPUT directory
 #out_tag = "FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_GEN_ULCheck"
-out_tag = "FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheckV2_GEN_"
+out_tag = "FullR2Studies/ValidationChecks/ttXJet_dim6TopMay20GST_run0StartPt_qCutScan_GEN_"
 #out_tag = "ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_GEN_"
+prod_tag = ""
 
 
 # Append UL year to out tag
@@ -56,29 +57,10 @@ runs_whitelist    = []  # (i.e. MG starting points)
 
 # Specify the input directories. Note: The workflows in each of the input directories should all be uniquely named w.r.t each other
 input_dirs = [
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL16/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL16APV/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_ULCheck-UL18/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL16/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL16APV/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL17/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL18/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttHJet_dim6TopMay20GST-checkDIM6Syntaxes_UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_dim6TopMay20GST-and-ECO_checkDIM6SQSyntax_UL17/v2"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttHJet_dim6TopMay20GST-StartPtChecks_UL17/v2"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttH-ttHJet_dim6TopMay20GST_JustctGctp-check-dim6syntaxes_UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testHiggsInterferenceWithLL_UL17/v2"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testV2HiggsInterferenceWithLL_UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testBothSetsOfSamplesTogetherHiggsInterferenceWithLL_UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttX-tXq_dim6TopMay20GST_testBothSetsOfSamplesTogetherHiggsInterferenceWithLL-rerunLHE_UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttHTOll_testHiggsInterferenceWithllWithMMLL10dim6TopMay20GST_UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-tllq-tHq_dim6TopMay20GST_all22WCsBaselineStartPtTOP19001_UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/ForPhenoJhepReviewStudies/ttW-ttWJet_cbW-cptb-1dChecks_dim6TopMay20GST_UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttllJet-ttbarJet_dim6TopMay20GST_all22WCsBaselineStartPtTOP19001_UL17/v1"),
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttXJet-tXq-ttbarJet_dim6TopMay20GST_all22WCsDim6Eq0_UL17/v1"),
-    os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheckV2_UL17/v1"),
 ]
 
 
@@ -101,11 +83,19 @@ for path in input_dirs:
         relpath = os.path.relpath(path,input_path_full)
         lhe_dirs.append(os.path.join(relpath,fd))
 
+'''
 # Hardcode the lhe dirs by hand
-#lhe_dirs = [
-#    #"kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4/v1/lhe_step_tHq4f_testOldGenprodHanV4_run2"
-#    "kmohrman/LHE_step/FullR2Studies/PreliminaryStudies/ttHJet_testOldGenprod-testModels/v1/lhe_step_ttHJet_testOldGenproddim6TopMay20GST_run1", # 100k
-#]
+lhe_dirs = [
+    # For Full R2
+    "kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttHJet_all22WCsStartPtCheckdim6TopMay20GST_run0",
+    "kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttlnuJet_all22WCsStartPtCheckdim6TopMay20GST_run0",
+    "kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttllNuNuJetNoHiggs_all22WCsStartPtCheckdim6TopMay20GST_run0",
+    #"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_tllq4fNoSchanWNoHiggs0p_all22WCsStartPtCheckdim6TopMay20GST_run0",
+    #"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_tHq4f_all22WCsStartPtCheckdim6TopMay20GST_run0",
+    "kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttbarJet_all22WCsStartPtCheckdim6TopMay20GST_run0",
+    #"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheckV2_UL17/v1/lhe_step_tllq4fNoSchanWNoHiggs0p_all22WCsStartPtCheckV2dim6TopMay20GST_run0"
+]
+'''
 
 
 ########## Set up output based on run setup ##########
@@ -117,9 +107,9 @@ if RUN_SETUP == 'mg_studies':
     plotdir_path = "~/www/lobster/postLHE_step/{tag}/{ver}".format(tag=out_tag,ver=out_ver)
 elif RUN_SETUP == 'full_production':
     # For Large MC production
-    output_path  = "/store/user/$USER/FullProduction/{tag}/postLHE_step/{ver}".format(tag=out_tag,ver=out_ver)
-    workdir_path = "/tmpscratch/users/$USER/FullProduction/{tag}/postLHE_step/{ver}".format(tag=out_tag,ver=out_ver)
-    plotdir_path = "~/www/lobster/FullProduction/{tag}/postLHE_step/{ver}".format(tag=out_tag,ver=out_ver)
+    output_path  = "/store/user/$USER/FullProduction/FullR2/{ul}/{tag}/postLHE_step/{ver}".format(ul=UL_YEAR,tag=prod_tag,ver=out_ver)
+    workdir_path = "/tmpscratch/users/$USER/FullProduction/FullR2/{ul}/{tag}/postLHE_step/{ver}".format(ul=UL_YEAR,tag=prod_tag,ver=out_ver)
+    plotdir_path = "~/www/lobster/FullProduction/FullR2/{ul}/{tag}/postLHE_step/{ver}".format(ul=UL_YEAR,tag=prod_tag,ver=out_ver)
 elif RUN_SETUP == 'testing':
     # For test runs (where you do not intend to keep the output)
     grp_tag = "lobster_{tstamp}".format(tstamp=timestamp_tag)
@@ -385,11 +375,27 @@ rel_map = {
 gs_mods_dict = {}
 gs_mods_dict["base"] = {}
 gs_mods_dict["base"]["base"] = []
+'''
 # Example of q cut variation
-gs_mods_dict["ttZJet"] = {}
-gs_mods_dict["ttZJet"]['qCut15'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 15.|g']
-gs_mods_dict["ttZJet"]['qCut19'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 19.|g']
-gs_mods_dict["ttZJet"]['qCut25'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 25.|g']
+gs_mods_dict["ttHJet"] = {}
+gs_mods_dict["ttHJet"]['qCut15'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 15.|g']
+gs_mods_dict["ttHJet"]['qCut20'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 20.|g']
+gs_mods_dict["ttHJet"]['qCut25'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 25.|g']
+gs_mods_dict["ttlnuJet"] = {}
+gs_mods_dict["ttlnuJet"]['qCut15'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 15.|g']
+gs_mods_dict["ttlnuJet"]['qCut20'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 20.|g']
+gs_mods_dict["ttlnuJet"]['qCut25'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 25.|g']
+gs_mods_dict["ttbarJet"] = {}
+gs_mods_dict["ttbarJet"]['qCut15'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 15.|g']
+gs_mods_dict["ttbarJet"]['qCut20'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 20.|g']
+gs_mods_dict["ttbarJet"]['qCut25'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 25.|g']
+gs_mods_dict["ttllNuNuJetNoHiggs"] = {}
+gs_mods_dict["ttllNuNuJetNoHiggs"]['qCut15'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 15.|g']
+gs_mods_dict["ttllNuNuJetNoHiggs"]['qCut20'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 20.|g']
+gs_mods_dict["ttllNuNuJetNoHiggs"]['qCut25'] = ['s|JetMatching:qCut = 20.|JetMatching:qCut = 25.|g']
+'''
+
+# Turn matching off here, since we are using a fragment wiht matching turned on
 gs_mods_dict["ttH"] = {}
 gs_mods_dict["ttH"]["MatchOff"] = ['s|JetMatching:merge = on|JetMatching:merge = off|g']
 gs_mods_dict["ttHTOll"] = {}
