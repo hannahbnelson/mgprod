@@ -14,9 +14,9 @@ timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 input_path = "/store/user/"
 input_path_full = "/hadoop" + input_path
 
-#master_label = 'EFT_CRC_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
+master_label = 'EFT_CRC_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
 #master_label = 'EFT_ALL_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
-master_label = 'EFT_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
+#master_label = 'EFT_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 
 ########## Set up the lobster cfg ##########
 
@@ -25,12 +25,12 @@ master_label = 'EFT_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 #    - Modify gen cfgs
 
 # Specify what kind of output to make
-STEPS = 'throughGEN'
-#STEPS = 'throughNAOD'
+#STEPS = 'throughGEN'
+STEPS = 'throughMAOD'
 
 # Specfy the run setup
-#RUN_SETUP = 'full_production'
-RUN_SETUP = 'mg_studies'
+RUN_SETUP = 'full_production'
+#RUN_SETUP = 'mg_studies'
 #RUN_SETUP = 'testing'
 
 # Specify the UL year
@@ -44,7 +44,7 @@ out_ver = "v1"   # The version index for the OUTPUT directory
 #out_tag = "FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_GEN_ULCheck"
 out_tag = "FullR2Studies/ValidationChecks/ttXJet_dim6TopMay20GST_run0StartPt_qCutScan_GEN_"
 #out_tag = "ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_GEN_"
-prod_tag = ""
+prod_tag = "Round1/Batch1"
 
 
 # Append UL year to out tag
@@ -61,6 +61,7 @@ input_dirs = [
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL16APV/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL17/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL18/v1"),
+    os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/LHE_step/v1/"),
 ]
 
 
@@ -476,8 +477,8 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['sim']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['sim']),
             merge_size=-1,  # Don't merge files we don't plan to keep
-            #cleanup_input=True,
-            cleanup_input=False,
+            cleanup_input=True,
+            #cleanup_input=False,
             globaltag=False,
             outputs=['SIM-00000.root'],
             dataset=ParentDataset(
@@ -492,8 +493,8 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['digi']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['digi']),
             merge_size=-1,  # Don't merge files we don't plan to keep
-            #cleanup_input=True,
-            cleanup_input=False,
+            cleanup_input=True,
+            #cleanup_input=False,
             outputs=['DIGI-00000.root'],
             dataset=ParentDataset(
                 parent=sim,
@@ -507,8 +508,8 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['hlt']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['hlt']),
             merge_size=-1, # Don't merge files we don't plan to keep
-            #cleanup_input=True,
-            cleanup_input=False,
+            cleanup_input=True,
+            #cleanup_input=False,
             outputs=['HLT-00000'],
             dataset=ParentDataset(
                 parent=digi,
@@ -522,8 +523,8 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['reco']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['reco']),
             merge_size=-1,  # Don't merge files we don't plan to keep
-            #cleanup_input=True,
-            cleanup_input=False,
+            cleanup_input=True,
+            #cleanup_input=False,
             outputs=['RECO-00000.root'],
             dataset=ParentDataset(
                 parent=hlt,
@@ -537,8 +538,8 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['maod']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['maod']),
             merge_size='256M',
-            #cleanup_input=True,
-            cleanup_input=False,
+            cleanup_input=True,
+            #cleanup_input=False,
             outputs=['MAOD-00000.root'],
             dataset=ParentDataset(
                 parent=reco,
@@ -564,8 +565,9 @@ for idx,lhe_dir in enumerate(lhe_dirs):
         # Specify which steps to run
         if (STEPS == 'throughGEN'):
             wf.extend([gen])
-        elif (STEPS == 'throughNAOD'):
-            wf.extend([gen,sim,digi,hlt,reco,maod,naod])
+        elif (STEPS == 'throughMAOD'):
+            #wf.extend([gen,sim,digi,hlt,reco,maod,naod])
+            wf.extend([gen,sim,digi,hlt,reco,maod])
         else:
             print "\nUnknown steps" , STEPS , "exiting...\n"
             raise Exception

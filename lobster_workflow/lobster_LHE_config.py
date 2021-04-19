@@ -35,7 +35,7 @@ version = "v1"
 grp_tag = "FullR2Studies/ValidationChecks/ttbarJet_dim6TopMay20GST_1dAxisScans-2heavy-2heavy2light_"
 #grp_tag = "ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_"
 
-prod_tag = "Round1/Batch1"
+prod_tag = "Round1/Batch3"
 
 if (UL_YEAR != "NONE"):
     grp_tag = grp_tag + UL_YEAR
@@ -289,11 +289,11 @@ gridpack_list = [
     #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttllNuNuJetNoHiggs_all22WCsDim6Eq0dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",      # SM
     #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttHJet_all22WCsDim6Eq0dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                  # SM
     ###  Full Run 2 FP samples ###
-    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttHJet_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttlnuJet_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttllNuNuJetNoHiggs_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tllq4fNoSchanWNoHiggs0p_all22WCsStartPtCheckV2dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tHq4f_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttHJet_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttlnuJet_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttllNuNuJetNoHiggs_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tllq4fNoSchanWNoHiggs0p_all22WCsStartPtCheckV2dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tHq4f_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
     ### Pheno paper JHEP review studies ###
     #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttW_cbWCheck1dForPhenodim6TopMay20GSTAxisScan_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
     #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttW_cbWCheck1dForPhenodim6TopMay20GSTAxisScan_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
