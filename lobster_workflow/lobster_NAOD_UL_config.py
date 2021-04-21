@@ -26,6 +26,7 @@ master_label = 'EFT_testNAOD_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 #    - Hardcode maod dirs to use
 
 PATH_TO_NAOD_CMSSW = "/afs/crc.nd.edu/user/k/kmohrman/CMSSW_Releases/CMSSW_10_6_19_patch2"
+#PATH_TO_NAOD_CMSSW = "CMSSW_10_6_19_patch2"
 
 # Specfy the run setup
 #RUN_SETUP = 'full_production'
@@ -80,8 +81,8 @@ for path in input_dirs:
 # Hardcode the maod dirs by hand
 # Do not include a trailing slash, as we're not expecting it when we use os.path.split later on
 maod_dirs = [
-    #"kmohrman/postLHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testFullULWFonCRC_ULCheck_UL17/v6/mAOD_step_ttHJet_testUpdateGenproddim6TopMay20GST_run1"
-    "kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/postLHE_step/v1/mAOD_step_ttHJet_all22WCsStartPtCheckdim6TopMay20GST_run0"
+    "kmohrman/postLHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testFullULWFonCRC_ULCheck_UL17/v6/mAOD_step_ttHJet_testUpdateGenproddim6TopMay20GST_run1"
+    #"kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/postLHE_step/v1/mAOD_step_ttHJet_all22WCsStartPtCheckdim6TopMay20GST_run0"
 ]
 #'''
 
@@ -202,8 +203,11 @@ for idx,maod_dir in enumerate(maod_dirs):
     naod = Workflow(
         label='nAOD_step_{tag}'.format(tag=label_tag),
         command='cmsRun python_cfgs/NAOD_Xuan/NANO_ttHEFT.py',
+        #command='cmsRun {cfg}'.format(cfg=wf_fragments['naod']),
         sandbox=cmssw.Sandbox(release=PATH_TO_NAOD_CMSSW),
         merge_size='256M',
+        merge_command='python haddnano.py @outputfiles @inputfiles',
+        extra_inputs=[os.path.join(PATH_TO_NAOD_CMSSW,'src/PhysicsTools/NanoAODTools/scripts/haddnano.py')],
         cleanup_input=False, # Leave the MAOD files
         outputs=['NAOD-00000.root'],
         dataset=Dataset(
