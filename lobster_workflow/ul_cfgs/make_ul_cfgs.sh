@@ -121,7 +121,7 @@ if $MAKE_UL16_CFGS ; then
 
         printf "\n --- START cfg $CFG_NAME ---\n"
         setup_rel $REL
-        cmsDriver.py step1 --mc --eventcontent NANOEDMAODSIM --datatier NANOAODSIM --conditions 106X_mcRun2_asymptotic_v15 --step NANO --nThreads 8 --era Run2_2016,run2_nanoAOD_106Xv1  --filein file:$FIN --fileout file:$FOUT --python_filename $CFG_NAME --no_exec
+        cmsDriver.py step1 --mc --eventcontent NANOAODSIM --datatier NANOAODSIM --conditions 106X_mcRun2_asymptotic_v15 --step NANO --nThreads 8 --era Run2_2016,run2_nanoAOD_106Xv1  --filein file:$FIN --fileout file:$FOUT --python_filename $CFG_NAME --no_exec
         printf "\n --- END cfg $CFG_NAME ---\n"
     )
 
@@ -222,7 +222,7 @@ if $MAKE_UL16APV_CFGS ; then
 
         printf "\n --- START cfg $CFG_NAME ---\n"
         setup_rel $REL
-        cmsDriver.py step1 --mc --eventcontent NANOEDMAODSIM --datatier NANOAODSIM --conditions 106X_mcRun2_asymptotic_preVFP_v9 --step NANO --nThreads 8 --era Run2_2016,run2_nanoAOD_106Xv1  --filein file:$FIN --fileout file:$FOUT --python_filename $CFG_NAME --no_exec
+        cmsDriver.py step1 --mc --eventcontent NANOAODSIM --datatier NANOAODSIM --conditions 106X_mcRun2_asymptotic_preVFP_v9 --step NANO --nThreads 8 --era Run2_2016,run2_nanoAOD_106Xv1  --filein file:$FIN --fileout file:$FOUT --python_filename $CFG_NAME --no_exec
         printf "\n --- END cfg $CFG_NAME ---\n"
     )
 fi
@@ -327,7 +327,7 @@ if $MAKE_UL17_CFGS ; then
 
         printf "\n --- START cfg $CFG_NAME ---\n"
         setup_rel $REL
-        cmsDriver.py step1 --mc --eventcontent NANOEDMAODSIM --datatier NANOAODSIM --conditions 106X_mc2017_realistic_v8 --step NANO --nThreads 8 --era Run2_2017,run2_nanoAOD_106Xv1  --filein file:$FIN --fileout file:$FOUT --python_filename $CFG_NAME --no_exec
+        cmsDriver.py step1 --mc --eventcontent NANOAODSIM --datatier NANOAODSIM --conditions 106X_mc2017_realistic_v8 --step NANO --nThreads 8 --era Run2_2017,run2_nanoAOD_106Xv1  --filein file:$FIN --fileout file:$FOUT --python_filename $CFG_NAME --no_exec
 
         printf "\n --- END cfg $CFG_NAME ---\n"
     )
@@ -428,7 +428,7 @@ if $MAKE_UL18_CFGS ; then
 
         printf "\n --- START cfg $CFG_NAME ---\n"
         setup_rel $REL
-        cmsDriver.py step1 --mc --eventcontent NANOEDMAODSIM --datatier NANOAODSIM --conditions 106X_upgrade2018_realistic_v15_L1v1 --step NANO --nThreads 8 --era Run2_2018,run2_nanoAOD_106Xv1  --filein file:$FIN --fileout file:$FOUT --python_filename $CFG_NAME --no_exec
+        cmsDriver.py step1 --mc --eventcontent NANOAODSIM --datatier NANOAODSIM --conditions 106X_upgrade2018_realistic_v15_L1v1 --step NANO --nThreads 8 --era Run2_2018,run2_nanoAOD_106Xv1  --filein file:$FIN --fileout file:$FOUT --python_filename $CFG_NAME --no_exec
         printf "\n --- END cfg $CFG_NAME ---\n"
     )
 fi
