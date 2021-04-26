@@ -17,6 +17,7 @@ input_path_full = "/hadoop" + input_path
 master_label = 'EFT_CRC_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
 #master_label = 'EFT_ALL_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 #master_label = 'EFT_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
+#master_label = 'EFT_testNAOD_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 
 ########## Set up the lobster cfg ##########
 
@@ -27,6 +28,9 @@ master_label = 'EFT_CRC_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
 # Specify what kind of output to make
 #STEPS = 'throughGEN'
 STEPS = 'throughMAOD'
+#STEPS = 'throughNAOD'
+
+PATH_TO_NAOD_CMSSW = "/afs/crc.nd.edu/user/k/kmohrman/CMSSW_Releases/CMSSW_10_6_19_patch2"
 
 # Specfy the run setup
 RUN_SETUP = 'full_production'
@@ -44,7 +48,7 @@ out_ver = "v1"   # The version index for the OUTPUT directory
 #out_tag = "FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_GEN_ULCheck"
 out_tag = "FullR2Studies/ValidationChecks/ttXJet_dim6TopMay20GST_run0StartPt_qCutScan_GEN_"
 #out_tag = "ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_GEN_"
-prod_tag = "Round1/Batch1"
+prod_tag = "Round1/Batch3"
 
 
 # Append UL year to out tag
@@ -61,7 +65,9 @@ input_dirs = [
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL16APV/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL17/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL18/v1"),
-    os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/LHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/LHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch2/LHE_step/v1/"),
+    os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch3/LHE_step/v1/"),
 ]
 
 
@@ -88,13 +94,14 @@ for path in input_dirs:
 # Hardcode the lhe dirs by hand
 lhe_dirs = [
     # For Full R2
-    "kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttHJet_all22WCsStartPtCheckdim6TopMay20GST_run0",
-    "kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttlnuJet_all22WCsStartPtCheckdim6TopMay20GST_run0",
-    "kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttllNuNuJetNoHiggs_all22WCsStartPtCheckdim6TopMay20GST_run0",
+    #"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttHJet_all22WCsStartPtCheckdim6TopMay20GST_run0",
+    #"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttlnuJet_all22WCsStartPtCheckdim6TopMay20GST_run0",
+    #"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttllNuNuJetNoHiggs_all22WCsStartPtCheckdim6TopMay20GST_run0",
     #"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_tllq4fNoSchanWNoHiggs0p_all22WCsStartPtCheckdim6TopMay20GST_run0",
     #"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_tHq4f_all22WCsStartPtCheckdim6TopMay20GST_run0",
-    "kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttbarJet_all22WCsStartPtCheckdim6TopMay20GST_run0",
+    #"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttllJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheck_UL17/v1/lhe_step_ttbarJet_all22WCsStartPtCheckdim6TopMay20GST_run0",
     #"kmohrman/LHE_step/FullR2Studies/ValidationChecks/ttHJet-ttlnuJet-ttbarJet-tllq-tHq_dim6TopMay20GST_all22WCsStartPtCheckV2_UL17/v1/lhe_step_tllq4fNoSchanWNoHiggs0p_all22WCsStartPtCheckV2dim6TopMay20GST_run0"
+    "kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL17/v1/lhe_step_tllq4fNoSchanWNoHiggs0p_testUpdateGenproddim6TopMay20GST_run1"
 ]
 '''
 
@@ -338,7 +345,7 @@ rel_map = {
         'hlt' : 'CMSSW_8_0_33_UL',
         'reco': 'CMSSW_10_6_17_patch1',
         'maod': 'CMSSW_10_6_20',
-        'naod': 'CMSSW_10_6_19_patch2',
+        'naod': 'PATH_TO_NAOD_CMSSW',
     },
     'UL16APV' : {
         'gen' : 'CMSSW_10_6_19_patch3',
@@ -347,7 +354,7 @@ rel_map = {
         'hlt' : 'CMSSW_8_0_33_UL',
         'reco': 'CMSSW_10_6_17_patch1',
         'maod': 'CMSSW_10_6_20',
-        'naod': 'CMSSW_10_6_19_patch2',
+        'naod': 'PATH_TO_NAOD_CMSSW',
     },
     'UL17' : {
         'gen' : 'CMSSW_10_6_19_patch3',
@@ -356,7 +363,7 @@ rel_map = {
         'hlt' : 'CMSSW_9_4_14_UL_patch1',
         'reco': 'CMSSW_10_6_17_patch1',
         'maod': 'CMSSW_10_6_20',
-        'naod': 'CMSSW_10_6_19_patch2',
+        'naod': 'PATH_TO_NAOD_CMSSW',
     },
     'UL18' : {
         'gen' : 'CMSSW_10_6_19_patch3',
@@ -365,7 +372,7 @@ rel_map = {
         'hlt' : 'CMSSW_10_2_16_UL',
         'reco': 'CMSSW_10_6_17_patch1',
         'maod': 'CMSSW_10_6_20',
-        'naod': 'CMSSW_10_6_19_patch2',
+        'naod': 'PATH_TO_NAOD_CMSSW',
     },
 
 }
@@ -538,6 +545,7 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['maod']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['maod']),
             merge_size='256M',
+            #merge_size=-1,
             cleanup_input=True,
             #cleanup_input=False,
             outputs=['MAOD-00000.root'],
@@ -553,6 +561,8 @@ for idx,lhe_dir in enumerate(lhe_dirs):
             command='cmsRun {cfg}'.format(cfg=wf_fragments['naod']),
             sandbox=cmssw.Sandbox(release=rel_map[UL_YEAR]['naod']),
             merge_size='256M',
+            merge_command='python haddnano.py @outputfiles @inputfiles',
+            extra_inputs=[os.path.join(PATH_TO_NAOD_CMSSW,'src/PhysicsTools/NanoAODTools/scripts/haddnano.py')],
             cleanup_input=False, # Leave the MAOD files
             outputs=['NAOD-00000.root'],
             dataset=ParentDataset(
@@ -566,8 +576,9 @@ for idx,lhe_dir in enumerate(lhe_dirs):
         if (STEPS == 'throughGEN'):
             wf.extend([gen])
         elif (STEPS == 'throughMAOD'):
-            #wf.extend([gen,sim,digi,hlt,reco,maod,naod])
             wf.extend([gen,sim,digi,hlt,reco,maod])
+        elif (STEPS == 'throughNAOD'):
+            wf.extend([gen,sim,digi,hlt,reco,maod,naod])
         else:
             print "\nUnknown steps" , STEPS , "exiting...\n"
             raise Exception

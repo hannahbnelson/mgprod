@@ -13,10 +13,6 @@ timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 input_path = "/store/user/"
 input_path_full = "/hadoop" + input_path
 
-#master_label = 'EFT_CRC_naodOnly_crc_{tstamp}'.format(tstamp=timestamp_tag)
-#master_label = 'EFT_ALL_naodOnly_{tstamp}'.format(tstamp=timestamp_tag)
-#master_label = 'EFT_T3_naodOnly_{tstamp}'.format(tstamp=timestamp_tag)
-#master_label = 'testNAOD_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 master_label = 'EFT_testNAOD_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 
 
@@ -54,7 +50,8 @@ runs_whitelist    = []  # (i.e. MG starting points)
 
 # Specify the input directories. Note: The workflows in each of the input directories should all be uniquely named w.r.t each other
 input_dirs = [
-    #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL16/v1"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/postLHE_step/v1/"),
+    os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch2/postLHE_step/v1/"),
 ]
 
 
@@ -64,7 +61,7 @@ input_dirs = [
 maod_dirs = []
 for path in input_dirs:
     for fd in os.listdir(path):
-        if fd.find('moad_step_') < 0:
+        if fd.find('mAOD_step_') < 0:
             continue
         arr = fd.split('_')
         p,c,r = arr[2],arr[3],arr[4]
@@ -77,14 +74,14 @@ for path in input_dirs:
         relpath = os.path.relpath(path,input_path_full)
         maod_dirs.append(os.path.join(relpath,fd))
 
-#'''
+'''
 # Hardcode the maod dirs by hand
 # Do not include a trailing slash, as we're not expecting it when we use os.path.split later on
 maod_dirs = [
     "kmohrman/postLHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testFullULWFonCRC_ULCheck_UL17/v6/mAOD_step_ttHJet_testUpdateGenproddim6TopMay20GST_run1"
     #"kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/postLHE_step/v1/mAOD_step_ttHJet_all22WCsStartPtCheckdim6TopMay20GST_run0"
 ]
-#'''
+'''
 
 
 ########## Set up output based on run setup ##########
@@ -202,8 +199,7 @@ for idx,maod_dir in enumerate(maod_dirs):
 
     naod = Workflow(
         label='nAOD_step_{tag}'.format(tag=label_tag),
-        command='cmsRun python_cfgs/NAOD_Xuan/NANO_ttHEFT.py',
-        #command='cmsRun {cfg}'.format(cfg=wf_fragments['naod']),
+        command='cmsRun {cfg}'.format(cfg=wf_fragments['naod']),
         sandbox=cmssw.Sandbox(release=PATH_TO_NAOD_CMSSW),
         merge_size='256M',
         merge_command='python haddnano.py @outputfiles @inputfiles',
