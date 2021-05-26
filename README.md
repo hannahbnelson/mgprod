@@ -9,7 +9,7 @@ In order to setup your area, run the setup scripts located in the scripts direct
 
 This setup script is simply to make sure that the correct CMSSW releases are present when running lobster and should only have to be run once.
 
-## Producing Samples
+## Introduction to producing samples
 The production is split into two main steps, each with its own corresponding lobster configuration. It is assumed that the following commands are run in the `lobster_workflow` directory.
 
 Make sure to activate your lobster virtual environment before trying to run any of the lobster configs (Note: This implies that you must also have already done `cmsenv` in an appropriate CMSSW release before activating the virtual environment).
@@ -39,3 +39,5 @@ On the condorfe submit nodes run:
 Again replacing the `REPLACEME` string with a path to your own factory config file. For the postLHE step, the lobster workers can come from either the CRC or T3 resources.
 
 Both lobster configs sport particular run setups to try and better facilitate the transition from the first step to the second. Currently, these options are: `local`, `mg_studies` (which uses the `grp_tag` variable for directory naming) and ,`full_production` (which uses the `production_tag` variable for directory naming). Each of which sets up a particular and separate directory structure in your user area on `/hadoop`. Feel free to modify, or add your own setups, these are simply to make specifying the output from the LHE step and the input to the postLHE step as easy as possible.
+
+## Notes on the production of NAOD samples
