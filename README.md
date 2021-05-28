@@ -66,6 +66,6 @@ git cms-init   #not really needed unless you later want to add some other cmssw 
 git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
 scram b
 ```
-At this point, you should have all of the necessary code in order to produce the EFT NAOD files. At this point, do a `scram b` in the `CMSSW_10_6_19_patch2/src` to make sure everyting is compiled. 
+At this point, you should have all of the necessary code in order to produce the EFT NAOD samples. Before moving on, do a `scram b` in the `CMSSW_10_6_19_patch2/src` to make sure everyting is compiled. 
 
 Finally, edit the `PATH_TO_NAOD_CMSSW` global variable in your lobster config to point to your new `CMSSW_10_6_19_patch2` directory.
