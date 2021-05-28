@@ -41,3 +41,31 @@ Again replacing the `REPLACEME` string with a path to your own factory config fi
 Both lobster configs sport particular run setups to try and better facilitate the transition from the first step to the second. Currently, these options are: `local`, `mg_studies` (which uses the `grp_tag` variable for directory naming) and ,`full_production` (which uses the `production_tag` variable for directory naming). Each of which sets up a particular and separate directory structure in your user area on `/hadoop`. Feel free to modify, or add your own setups, these are simply to make specifying the output from the LHE step and the input to the postLHE step as easy as possible.
 
 ## Notes on the production of NAOD samples
+
+To generate NAOD files that include the EFT weights, we cannot use a generic CMSSW release. We need to include the code that puts the weight information into the NAOD files, so execute the following commands to set up the appropriate CMSSW release and include the necessary packages: 
+```
+cmsrel CMSSW_10_6_19_patch2
+cd CMSSW_10_6_19_patch2/src/
+export SCRAM_ARCH=slc7_amd64_gcc700
+cmsenv
+
+git cms-addpkg PhysicsTools/NanoAOD
+git remote add eftfit https://github.com/GonzalezFJR/cmssw.git
+git fetch eftfit
+```
+The `NanoAOD/plugins/GenWeightsTableProducer.cc` script requires `WCFit` and `WCPoint`, so clone the `EFTGenReader` inside of `CMSSW_10_6_19_patch2/src/`:
+```
+cd CMSSW_10_6_19_patch2/src/ # Or whatever cd gets you into this directory
+git clone https://github.com/TopEFT/EFTGenReader.git
+```
+Finally, we will also need the `NanoAODTools` (described [here](https://twiki.cern.ch/twiki/bin/viewauth/CMS/NanoAODTools#Quickly_make_plots_with_NanoAODT)) in order to get the script we need to merge non-EDM NAOD root files. Follow these steps to clone the repository inside of `PhysicsTools`:
+```
+cd CMSSW_10_6_19_patch2/src
+cmsenv
+git cms-init   #not really needed unless you later want to add some other cmssw stuff
+git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
+scram b
+```
+At this point, you should have all of the necessary code in order to produce the EFT NAOD files. At this point, do a `scram b` in the `CMSSW_10_6_19_patch2/src` to make sure everyting is compiled. 
+
+Finally, edit the `PATH_TO_NAOD_CMSSW` global variable in your lobster config to point to your new `CMSSW_10_6_19_patch2` directory.
