@@ -10,7 +10,7 @@ In order to setup your area, run the setup scripts located in the scripts direct
 This setup script is simply to make sure that the correct CMSSW releases are present when running lobster and should only have to be run once. However, please note that the script may need to be edited, depending on MC samples you are trying to produce. If the release that you need for your samples is not in the script, you will need to add it to the script and rerun, or just set up the release manually.
 
 ## Introduction to producing samples
-The production is split into multiple steps, each with its own corresponding lobster configuration. It is assumed that the following commands are run in the `lobster_workflow` directory. For information about how to use lobster, please see the [lobster tutorial](https://indico.cern.ch/event/1012446/) from February of 2021.
+The production is split into multiple steps, each with its own corresponding lobster configuration. It is assumed that the following commands are run in the `lobster_workflow` directory. For information about how to use lobster, please see the [lobster tutorial](https://indico.cern.ch/event/1012446/) from February of 2021, especially the slides from the "How to Lobster" section, which provide a thorough introduction.
 
 Make sure to activate your lobster virtual environment before trying to run any of the lobster configs (Note: This implies that you must also have already done `cmsenv` in an appropriate CMSSW release before activating the virtual environment).
 
