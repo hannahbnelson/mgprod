@@ -14,6 +14,7 @@ timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 input_path = "/store/user/"
 input_path_full = "/hadoop" + input_path
 
+#master_label = 'EFT_CRC_b4_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
 master_label = 'EFT_CRC_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
 #master_label = 'EFT_ALL_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 #master_label = 'EFT_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
@@ -33,9 +34,9 @@ STEPS = 'throughMAOD'
 PATH_TO_NAOD_CMSSW = "/afs/crc.nd.edu/user/k/kmohrman/CMSSW_Releases/CMSSW_10_6_19_patch2"
 
 # Specfy the run setup
-RUN_SETUP = 'full_production'
+#RUN_SETUP = 'full_production'
 #RUN_SETUP = 'mg_studies'
-#RUN_SETUP = 'testing'
+RUN_SETUP = 'testing'
 
 # Specify the UL year
 #UL_YEAR = 'UL16'
@@ -44,11 +45,11 @@ UL_YEAR = 'UL17'
 #UL_YEAR = 'UL18'
 
 # Name the output
-out_ver = "v1"   # The version index for the OUTPUT directory
+out_ver = "v2"   # The version index for the OUTPUT directory
 #out_tag = "FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_GEN_ULCheck"
 out_tag = "FullR2Studies/ValidationChecks/ttXJet_dim6TopMay20GST_run0StartPt_qCutScan_GEN_"
 #out_tag = "ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_GEN_"
-prod_tag = "Round1/Batch3"
+prod_tag = "Round1/Batch1"
 
 
 # Append UL year to out tag
@@ -65,9 +66,16 @@ input_dirs = [
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL16APV/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL17/v1"),
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL18/v1"),
-    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/LHE_step/v1/"),
+    os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/LHE_step/v1/"),
     #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch2/LHE_step/v1/"),
-    os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch3/LHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch3/LHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch4/LHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL18/Round1/Batch1/LHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL18/Round1/Batch2/LHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL18/Round1/Batch3/LHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL18/Round1/Batch4/LHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL16/Round1/Batch1/LHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL16APV/Round1/Batch1/LHE_step/v1"),
 ]
 
 
@@ -275,6 +283,9 @@ gen_ul_cfg_map = {
         },
         'tHq4f' : {
             'gen': os.path.join(ul_base,'UL16_GEN_ttlnu_cfg.py'),
+        },
+        'tttt' : {
+            'gen': os.path.join(ul_base,'UL16_GEN_ttlnu_cfg.py'),
         }
     },
     'UL16APV' : {
@@ -291,6 +302,9 @@ gen_ul_cfg_map = {
             'gen': os.path.join(ul_base,'UL16APV_GEN_ttlnu_cfg.py'),
         },
         'tHq4f' : {
+            'gen': os.path.join(ul_base,'UL16APV_GEN_ttlnu_cfg.py'),
+        },
+        'tttt' : {
             'gen': os.path.join(ul_base,'UL16APV_GEN_ttlnu_cfg.py'),
         }
     },
@@ -309,6 +323,9 @@ gen_ul_cfg_map = {
         },
         'tHq4f' : {
             'gen': os.path.join(ul_base,'UL17_GEN_ttlnu_cfg.py'),
+        },
+        'tttt' : {
+            'gen': os.path.join(ul_base,'UL17_GEN_ttlnu_cfg.py'),
         }
     },
     'UL18' : {
@@ -325,6 +342,9 @@ gen_ul_cfg_map = {
             'gen': os.path.join(ul_base,'UL18_GEN_ttlnu_cfg.py'),
         },
         'tHq4f' : {
+            'gen': os.path.join(ul_base,'UL18_GEN_ttlnu_cfg.py'),
+        },
+        'tttt' : {
             'gen': os.path.join(ul_base,'UL18_GEN_ttlnu_cfg.py'),
         }
     },

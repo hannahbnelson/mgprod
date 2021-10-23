@@ -13,7 +13,9 @@ from helpers.utils import regex_match
 
 timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 
-events_per_gridpack = 5e6
+events_per_gridpack = 7.5e6
+#events_per_gridpack = 15e6
+#events_per_gridpack = 5e6
 #events_per_gridpack = 100e3
 events_per_lumi = 500
 
@@ -23,8 +25,8 @@ RUN_SETUP = 'full_production'
 #RUN_SETUP = 'lobster_test'
 
 #UL_YEAR = 'UL16'
-#UL_YEAR = 'UL16APV'
-UL_YEAR = 'UL17'
+UL_YEAR = 'UL16APV'
+#UL_YEAR = 'UL17'
 #UL_YEAR = 'UL18'
 if ((UL_YEAR != 'UL16') and (UL_YEAR != 'UL16APV') and (UL_YEAR != 'UL17') and (UL_YEAR != 'UL18')):
     UL_YEAR = "NONE"
@@ -35,7 +37,7 @@ version = "v1"
 grp_tag = "FullR2Studies/ValidationChecks/ttbarJet_dim6TopMay20GST_1dAxisScans-2heavy-2heavy2light_"
 #grp_tag = "ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_"
 
-prod_tag = "Round1/Batch3"
+prod_tag = "Round1/Batch1"
 
 if (UL_YEAR != "NONE"):
     grp_tag = grp_tag + UL_YEAR
@@ -315,6 +317,7 @@ FullR2_gridpack_list = [
     "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttllNuNuJetNoHiggs_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
     "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tllq4fNoSchanWNoHiggs0p_all22WCsStartPtCheckV2dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
     "kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tHq4f_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+    "kmohrman/gridpack_scans/FullR2Studies/FromSergio/tttt_FourtopsMay3v1_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
 ]
 
 if RUN_SETUP == 'full_production':

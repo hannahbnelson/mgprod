@@ -13,7 +13,8 @@ timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 input_path = "/store/user/"
 input_path_full = "/hadoop" + input_path
 
-master_label = 'EFT_testNAOD_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
+#master_label = 'EFT_testNAOD_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
+master_label = 'EFT_testNAOD_crc_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 
 
 ########## Set up the lobster cfg ##########
@@ -50,8 +51,16 @@ runs_whitelist    = []  # (i.e. MG starting points)
 
 # Specify the input directories. Note: The workflows in each of the input directories should all be uniquely named w.r.t each other
 input_dirs = [
-    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/postLHE_step/v1/"),
-    os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch2/postLHE_step/v1/"),
+    os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/postLHE_step/v2/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch2/postLHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch3/postLHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch4/postLHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL18/Round1/Batch1/postLHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL18/Round1/Batch2/postLHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL18/Round1/Batch3/postLHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL18/Round1/Batch4/postLHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL16/Round1/Batch1/postLHE_step/v1/"),
+    #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL16APV/Round1/Batch1/postLHE_step/v1/"),
 ]
 
 
@@ -201,7 +210,8 @@ for idx,maod_dir in enumerate(maod_dirs):
         label='nAOD_step_{tag}'.format(tag=label_tag),
         command='cmsRun {cfg}'.format(cfg=wf_fragments['naod']),
         sandbox=cmssw.Sandbox(release=PATH_TO_NAOD_CMSSW),
-        merge_size='256M',
+        #merge_size='256M',
+        merge_size='1000M',
         merge_command='python haddnano.py @outputfiles @inputfiles',
         extra_inputs=[os.path.join(PATH_TO_NAOD_CMSSW,'src/PhysicsTools/NanoAODTools/scripts/haddnano.py')],
         cleanup_input=False, # Leave the MAOD files
