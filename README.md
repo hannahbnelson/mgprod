@@ -53,6 +53,7 @@ cmsenv
 git cms-addpkg PhysicsTools/NanoAOD
 git remote add eftfit https://github.com/GonzalezFJR/cmssw.git
 git fetch eftfit
+git checkout eftfit/ULWCFit
 ```
 The `NanoAOD/plugins/GenWeightsTableProducer.cc` script requires `WCFit` and `WCPoint`, so clone the `EFTGenReader` inside of `CMSSW_10_6_19_patch2/src/`:
 ```
