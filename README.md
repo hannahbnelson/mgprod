@@ -41,33 +41,39 @@ These lobster configs feature particular run setups to try and better facilitate
 
 ### Additional notes on the production of NAOD samples
 
-The NAOD step can be run as part of the "postLHE" step as described above, or as a standalone workflow. One befit of running it as a standalone workflow (that takes as input the MAOD files produced by the `postLHE` step) is that it makes it cleaner and more straightforward to rerun the NAOD step. The `lobster_NAOD_UL_config.py` config is designed to run on the MAOD output of the `lobster_postLHE_UL_config.py` step to produce UL NAOD.
+The NAOD step can be run as part of the "postLHE" step as described above, or as a standalone workflow. One befit of running it as a standalone workflow (that takes as input the MAOD files produced by the `postLHE` step) is that it makes it cleaner and more straightforward to rerun the NAOD step. The `lobster_NAOD_UL_config.py` config is designed to run on the MAOD output of the `lobster_postLHE_UL_config.py` step to produce UL NAOD. 
 
-To generate NAOD files that include the EFT weights, we cannot use a generic CMSSW release. We need to include the code that puts the weight information into the NAOD files, so execute the following commands to set up the appropriate CMSSW release and include the necessary packages: 
+The following steps are for producing NAOD v9 samples (with `CMSSW_10_6_26`), so please be sure that you are using v9 `cmsRun` configs.
+
+To generate NAOD files that include the EFT weights, we cannot use a generic CMSSW release. We need to include the code that puts the weight information into the NAOD files, so execute the following commands to set up the appropriate CMSSW release and include the necessary packages. The last three commands (the `cherry-pick` commands) apply the necessary changes for handling EFT samples. Note, if you are producing NAOD v8 samples (with `CMSSW_10_6_19_patch2`), you can just run `git checkout eftfit/ULWCFit` instead of the `cherry-pick` commands.
 ```
-cmsrel CMSSW_10_6_19_patch2
-cd CMSSW_10_6_19_patch2/src/
+cmsrel CMSSW_10_6_26
+cd CMSSW_10_6_26/src/
 export SCRAM_ARCH=slc7_amd64_gcc700
 cmsenv
 
 git cms-addpkg PhysicsTools/NanoAOD
+cd PhysicsTools/NanoAOD/
 git remote add eftfit https://github.com/GonzalezFJR/cmssw.git
 git fetch eftfit
-git checkout eftfit/ULWCFit
+git cherry-pick c0901cfc459a8d5282ebb1bc74374903d29e3eee
+git cherry-pick 4068e48b02b1fcb46949b3ebeac6a7b59062c2e0
+git cherry-pick 76d0a24615c2b2b3aa7333c5aed5cc7bb6a7fd1d
 ```
-The `NanoAOD/plugins/GenWeightsTableProducer.cc` script requires `WCFit` and `WCPoint`, so clone the `EFTGenReader` inside of `CMSSW_10_6_19_patch2/src/`:
+
+The `NanoAOD/plugins/GenWeightsTableProducer.cc` script requires `WCFit` and `WCPoint`, so clone the `EFTGenReader` inside of `CMSSW_10_6_26/src/`:
 ```
-cd CMSSW_10_6_19_patch2/src/ # Or whatever cd gets you into this directory
+cd CMSSW_10_6_26/src/ # Or whatever cd gets you into this directory
 git clone https://github.com/TopEFT/EFTGenReader.git
 ```
 Finally, we will also need the `NanoAODTools` (described [here](https://twiki.cern.ch/twiki/bin/viewauth/CMS/NanoAODTools#Quickly_make_plots_with_NanoAODT)) in order to get the script we need to merge non-EDM NAOD root files. Follow these steps to clone the repository inside of `PhysicsTools`:
 ```
-cd CMSSW_10_6_19_patch2/src
+cd CMSSW_10_6_26/src
 cmsenv
 git cms-init   #not really needed unless you later want to add some other cmssw stuff
 git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
 scram b
 ```
-At this point, you should have all of the necessary code in order to produce the EFT NAOD samples. Before moving on, do a `scram b` in the `CMSSW_10_6_19_patch2/src` to make sure everyting is compiled. 
+At this point, you should have all of the necessary code in order to produce the EFT NAOD samples. Before moving on, do a `scram b` in the `CMSSW_10_6_26/src` to make sure everyting is compiled. 
 
-Finally, edit the `PATH_TO_NAOD_CMSSW` global variable in your lobster config to point to your new `CMSSW_10_6_19_patch2` directory.
+Finally, edit the `PATH_TO_NAOD_CMSSW` global variable in your lobster config to point to your new `CMSSW_10_6_26` directory.
