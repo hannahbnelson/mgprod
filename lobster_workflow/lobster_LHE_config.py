@@ -9,24 +9,24 @@ from lobster.core import AdvancedOptions, Category, Config, MultiProductionDatas
 
 #sys.path.append(os.getcwd())
 #sys.path.append('/afs/crc.nd.edu/user/a/awightma/Public/git_repos/mgprod/lobster_workflow')
-from helpers.utils import regex_match
+#from helpers.utils import regex_match
 
 timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 
-events_per_gridpack = 7.5e6
+#events_per_gridpack = 7.5e6
 #events_per_gridpack = 15e6
 #events_per_gridpack = 5e6
-#events_per_gridpack = 100e3
+events_per_gridpack = 100e3
 events_per_lumi = 500
 
 #RUN_SETUP = 'local'
-RUN_SETUP = 'full_production'
+#RUN_SETUP = 'full_production'
 #RUN_SETUP = 'mg_studies'
-#RUN_SETUP = 'lobster_test'
+RUN_SETUP = 'lobster_test'
 
 #UL_YEAR = 'UL16'
-UL_YEAR = 'UL16APV'
-#UL_YEAR = 'UL17'
+#UL_YEAR = 'UL16APV'
+UL_YEAR = 'UL17'
 #UL_YEAR = 'UL18'
 if ((UL_YEAR != 'UL16') and (UL_YEAR != 'UL16APV') and (UL_YEAR != 'UL17') and (UL_YEAR != 'UL18')):
     UL_YEAR = "NONE"
@@ -34,8 +34,9 @@ if ((UL_YEAR != 'UL16') and (UL_YEAR != 'UL16APV') and (UL_YEAR != 'UL17') and (
 version = "v1"
 #grp_tag = "FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprod-HanV4"
 #grp_tag = "FullR2Studies/ULChecks/ttH-ttHJet_dim6TopMay20GST_JustctGctp-check-dim6syntaxes_"
-grp_tag = "FullR2Studies/ValidationChecks/ttbarJet_dim6TopMay20GST_1dAxisScans-2heavy-2heavy2light_"
+#grp_tag = "FullR2Studies/ValidationChecks/ttbarJet_dim6TopMay20GST_1dAxisScans-2heavy-2heavy2light_"
 #grp_tag = "ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_"
+grp_tag = "Test"
 
 prod_tag = "Round1/Batch1"
 
@@ -109,206 +110,8 @@ storage = StorageConfiguration(
 )
 
 gridpack_list = [
-    #"awightma/gridpack_scans/central_gridpacks/tth01j_5f_ckm_NLO_FXFX_MH125_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz", # A central ttH
-    #"awightma/gridpack_scans/central_gridpacks/TTWJetsToLNu_5f_NLO_FXFX_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",     # A central ttlnu
-    #"awightma/gridpack_scans/central_gridpacks/TTZJetsToLLNuNu_5f_NLO_slc6_amd64_gcc481_CMSSW_7_1_30_tarball.tar.xz",       # A central ttll
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJet_HanV4ttXJetStartPtChecks_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # FP R5 start pt
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJet_HanV4ttXJetStartPtChecks_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", #FP (bad start pt)
-    #"kmohrman/gridpack_scans/2019_04_19/ttlnuJet_HanV4ttXJetStartPtChecks_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", #FP
-    #"kmohrman/gridpack_scans/2019_04_19/ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", #FP
-    #"kmohrman/gridpack_scans/2019_04_19/tHq4f_HanV4tHqStartPtChecks_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/tHq4f_HanV4tHqStartPtChecks_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/tHq4f_HanV4tHqStartPtChecks_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/tHq4f_HanV4tHqStartPtChecks_run3_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"awightma/gridpack_scans/2019_04_19/tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", #FP
-    #"kmohrman/gridpack_scans/2019_04_19/tllq4fNoSchanWNoHiggs0p_HanV4tZqStartPtCheck_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/tllq4fNoSchanWNoHiggs0p_HanV4tZqStartPtCheck_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/tllq4fNoSchanWNoHiggs0p_HanV4tZqStartPtCheck_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/tllq4fNoSchanWNoHiggs0p_HanV4tZqStartPtCheck_run3_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/tHq4f_HanV4tXqSMCheck_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/tllq4fNoSchanWNoHiggs0p_HanV4tXqSMCheck_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJet_HanV4ttXSMCheck_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/ttllNuNuJetNoHiggs_HanV4ttXSMCheck_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/ttlnuJet_HanV4ttXSMCheck_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"awightma/gridpack_scans/2019_04_19/ttllNuNuJetNoHiggs_HanModelNoDim6_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"awightma/gridpack_scans/2019_04_19/ttHJet_HanModelNoDim6_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"awightma/gridpack_scans/2019_04_19/ttlnuJet_HanModelNoDim6_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJet_HanV4ttXjetxqcut5_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJet_HanV4ttXjetxqcut10_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJet_HanV4ttXjetxqcut15_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJetSMEFTcomp_ttXJetSMEFTcomp_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # Comp with SMEFT NLO
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJetSMEFTcomp_ttXJetSMEFTcomp_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # Comp with SMEFT NLO
-    #"kmohrman/gridpack_scans/2019_04_19/ttZJetSMEFTcomp_ttXJetSMEFTcomp_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # Comp with SMEFT NLO
-    #"kmohrman/gridpack_scans/2020_05_11_fromReza/ttH_SMEFTNLO_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Reza NLO
-    #"kmohrman/gridpack_scans/2020_05_11_fromReza/ttW_SMEFTNLO_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Reza NLO
-    #"kmohrman/gridpack_scans/2020_05_11_fromReza/ttZ_SMEFTNLO_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Reza NLO
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_dim6Top-vMay2020-normChromoTrue_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # Updated dim6Top ttH check
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJet_dim6Top-vMay2020-normChromoTrue_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # Updated dim6Top ttHJet check
-    #"kmohrman/gridpack_scans/2019_04_19/ttW_HanV4-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",              # ttW (not ttlnu!) (bad start pt)
-    #"kmohrman/gridpack_scans/2019_04_19/ttZ_HanV4-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",              # ttZ (not ttll!) (bad start pt)
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJet_HanV4-0plus1p-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",   # This is (or at least should be) 0+1p (not just +1p) (bad start pt)
-    #"kmohrman/gridpack_scans/2019_04_19/ttZJet_HanV4-0plus1p-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",   # This is (or at least should be) 0+1p (not just +1p) (bad start pt)
-    #"kmohrman/gridpack_scans/2019_04_19/ttW_HanV4-QED1QCD2-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",     # ttW QED1,QD2
-    #"kmohrman/gridpack_scans/2019_04_19/ttZ_HanV4-QED1QCD2-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",     # ttZ QED1,QCD2
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_HanV4-0p-QED1QCD2-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",   # ttH QED1, QCD1
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJet_HanV4-0plus1p-noMatching-QED1QCD2-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttHJet QED1, QCD2, matching off (since no extr jet)!
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJet_HanV4-0plus1p-noMatching-QED1QCD2-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttWJet QED1, QCD2, matching off (since no extr jet)!
-    #"kmohrman/gridpack_scans/2019_04_19/ttZJet_HanV4-0plus1p-noMatching-QED1QCD2-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttZJet QED1, QCD2, matching off (since no extr jet)!
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJet_HanV4-DIM61QED1noQEDconstraint-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttHJet QED=1, no QCD constraints
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJet_HanV4-DIM61QED1noQEDconstraint-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttWJet QED=1, no QCD constraints
-    #"kmohrman/gridpack_scans/2019_04_19/ttZJet_HanV4-DIM61QED1noQEDconstraint-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttZJet QED=1, no QCD constraints
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJet_HanV4-DIM61QED1QCD3-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttHJet, QED=1, QCD=3 (turns out the NLO QED=1, QCD=2 [QCD] mean that we should have QCD=3 to compare at LO
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJet_HanV4-DIM61QED1QCD3-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttWJet, QED=1, QCD=3 (bad start pt)
-    #"kmohrman/gridpack_scans/2019_04_19/ttZJet_HanV4-DIM61QED1QCD3-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttZJet, QED=1, QCD=3 (bad start pt)
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_HanV4-DIM61QED1QCD3-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttHJet, QED=1, QCD=3
-    #"kmohrman/gridpack_scans/2019_04_19/ttW_HanV4-DIM61QED1QCD3-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttWJet, QED=1, QCD=3 (bad start pt)
-    #"kmohrman/gridpack_scans/2019_04_19/ttZ_HanV4-DIM61QED1QCD3-withRwgt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttZJet, QED=1, QCD=3 (bad start pt)
-    #"kmohrman/gridpack_scans/2019_04_19/tllqJet5fNoSchanWNoHiggs_HanV4-tllqJet5f-Test_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # Atempt at making tllqJet 5f gridpack (HanV4)
-    #"kmohrman/gridpack_scans/2019_04_19/tllqJet5fNoSchanWNoHiggs_SMmodel-tllqJet5f-Test_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # Attempt at making a tllqJet 5f matched gridpack (SM model)
-    #"kmohrman/gridpack_scans/2020_05_11_fromReza/ttH_SM-SMEFTNLO_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Reza SM NLO gridpack
-    #"kmohrman/gridpack_scans/2020_05_11_fromReza/ttW_SM-SMEFTNLO_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Reza SM NLO gridpack
-    #"kmohrman/gridpack_scans/2020_05_11_fromReza/ttZ_SM-SMEFTNLO_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Reza SM NLO gridpack
-    #"kmohrman/gridpack_scans/2020_05_11_fromReza/ttHjet_SMEFTNLO_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Reza SM ttHJet test (not actualy plus jet!!!)
-    #"kmohrman/gridpack_scans/2020_05_11_fromReza/ttHjet_SMEFTNLO_NP0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Reza SM ttHJet test, with NP=0 (not actually plus jet!!!)
-    #"kmohrman/gridpack_scans/2020_05_11_fromReza/ttHjet_SM-SMEFTNLO-plusJ_NP0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Reza SM ttHJet, should actually be plus jet
-    #"kmohrman/gridpack_scans/2019_04_19/ttHJet_HanV4lModel16DttllScanpoints_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",   # Normal HanV4 ttHJet
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_HanV4ModelNoJets16DttllScanpoints_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # Normal VanV4 ttH
-    #"kmohrman/gridpack_scans/2019_04_19/ttW_HanV4-QED1QCD3-goodStartPt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",    # ttW QED1QCD3 good start pt
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJet_HanV4-QED1QCD3-goodStartPt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttWjet QED1QCD3 good start pt
-    #"kmohrman/gridpack_scans/2019_04_19/ttZ_HanV4-QED1QCD3-goodStartPt_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",    # ttZ QED1QCD3 good start pt
-    #"kmohrman/gridpack_scans/2019_04_19/ttZJet_HanV4-QED1QCD3-goodStartPt_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttZjet QED1QCD3 good start pt
-    #"kmohrman/gridpack_scans/2019_04_19/ttW_HanV4-goodStartPt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",    # ttW good start pt
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJet_HanV4-goodStartPt_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttWjet good start pt
-    #"kmohrman/gridpack_scans/2019_04_19/ttZ_HanV4-goodStartPt_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",    # ttZ good start pt
-    #"kmohrman/gridpack_scans/2019_04_19/ttZJet_HanV4-goodStartPt_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttZjet good start pt
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_cptHanV4AxisScan_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttH cpt axis scan (-15 to 15)
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_cptHanV4-batch2AxisScan_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttH cpt axis scan (-15 to 15) REDO, issue with first one
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_cptHanV4AxisScan_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttH cpt axis scan (-15 to 15)
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_cptHanV4AxisScan_run3_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttH cpt axis scan (-15 to 15)
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_cptHanV4AxisScan_run4_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttH cpt axis scan (-15 to 15)
-    #"kmohrman/gridpack_scans/2019_04_19/ttW_cpQ3HanV4AxisScan_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttW cpQ3 axis scan (-4 to 4)
-    #"kmohrman/gridpack_scans/2019_04_19/ttW_cpQ3HanV4AxisScan_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttW cpQ3 axis scan (-4 to 4)
-    #"kmohrman/gridpack_scans/2019_04_19/ttW_cpQ3HanV4AxisScan_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttW cpQ3 axis scan (-4 to 4)
-    #"kmohrman/gridpack_scans/2019_04_19/ttW_cpQ3HanV4AxisScan_run3_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttW cpQ3 axis scan (-4 to 4)
-    #"kmohrman/gridpack_scans/2019_04_19/ttW_cpQ3HanV4AxisScan_run4_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttW cpQ3 axis scan (-4 to 4)
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJet_cpQ3HanV4AxisScan_run0_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttWJet cpQ3 axis scan (-4 to 4)
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJet_cpQ3HanV4AxisScan_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttWJet cpQ3 axis scan (-4 to 4)
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJet_cpQ3HanV4AxisScan_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttWJet cpQ3 axis scan (-4 to 4)
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJet_cpQ3HanV4AxisScan_run3_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttWJet cpQ3 axis scan (-4 to 4)
-    #"kmohrman/gridpack_scans/2019_04_19/ttWJet_cpQ3HanV4AxisScan_run4_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttWJet cpQ3 axis scan (-4 to 4)
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_HanV4ttH0pStartPtDoubleCheck_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttH 0p start point check (or double check? Have we really not checked this before?)
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_HanV4ttH0pStartPtDoubleCheck_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttH 0p start point check (or double check? Have we really not checked this before?)
-    #"kmohrman/gridpack_scans/2019_04_19/ttH_HanV4ttH0pStartPtDoubleCheck_run3_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # ttH 0p start point check (or double check? Have we really not checked this before?)
-    ### Full run 2 studies PreliminaryStudies  ###
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_TESTdim6TopGST_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # First test gridpack with updated genproductions framework, updated dim6Top model
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_dim6TopMay20GSTtestWithOldGenprod_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # Test gridpack, old genprodudictions framework, new (May 2020) dim6Top model, with gs norm true
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_dim6TopMay20GSFtestWithOldGenprod_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz", # Test gridpack, old genprodudictions framework, new (May 2020) dim6Top model, with gs norm false
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testUpdateGenproddim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Test new updated genprod framework
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testUpdateGenproddim6TopMay20GSF_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Test new updated genprod framework
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testUpdateGenprodHanV4_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Test new updated genprod framework
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testOldGenproddim6TopMay20GST_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",  # Test old framework
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testOldGenproddim6TopMay20GSF_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",  # Test old framework
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testOldGenprodHanV4_run1_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",            # Test old framework
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttllNuNuJetNoHiggs_testUpdateGenproddim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",      # Test rest of processes with new framework (and new dim6Top)
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttlnuJet_testUpdateGenproddim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                # Test rest of processes with new framework (and new dim6Top)
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testUpdateGenproddim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Test rest of processes with new framework (and new dim6Top)
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testUpdateGenproddim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                   # Test rest of processes with new framework (and new dim6Top)
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttbar_newGenProdCheckTTBARv6dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check for bkg dependence on WCs
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttbar_newGenProdCheckTTBARv6dim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check for bkg dependence on WCs
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttbar_newGenProdCheckTTBARv6dim6TopMay20GST_run3_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check for bkg dependence on WCs
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttbarJet_newGenProdCheckTTBARv5dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check ttbar for bkg dependence on WCs
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttbarJet_newGenProdCheckTTBARv5dim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check ttbar for bkg dependence on WCs
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttbarJet_newGenProdCheckTTBARv5dim6TopMay20GST_run3_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check ttbar for bkg dependence on WCs
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testUpdateGenprodMG260dim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                   # Check new model and new genprod framework BUT with MG 260
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testUpdateGenprodMG260dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check new model and new genprod framework BUT with MG 260
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testUpdateGenprodMG260dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                  # Check new model and new genprod framework BUT with MG 260
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttlnuJet_testUpdateGenprodMG260dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                # Check new model and new genprod framework BUT with MG 260
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttllNuNuJetNoHiggs_testUpdateGenprodMG260dim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",      # Check new model and new genprod framework BUT with MG 260
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprodHanV4_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",                             # tHq check with old genprod and HanV4 (Has issue with FCNC=0 twice in proc card)
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testOldGenprodHanV4WithoutExtraFCNC0InProcCard_run2_slc6_amd64_gcc630_CMSSW_9_3_0_tarball.tar.xz",  # tHq check with old genprod and HanV4
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6SQdim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",  # check dim6^2<=2 syntax
-    ##"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6EQ2dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # check dim6=2 (should be wrong)
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6SQdim6TopECOMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttlnuJet_testDIM6SQdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testDIM6SQdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    ##"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testDIM6SQdim6TopECOMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Gridpack fails in LHE step, something wrong with gridpack
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testDIM6SQdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHq4f_testDIM6SQdim6TopECOMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6EQ1dim6TopMay20GSTStartPtChecks_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6SQdim6TopMay20GSTStartPtChecks_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testV2DIM6SQdim6TopMay20GSTStartPtChecks_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6SQdim6TopMay20GSTStartPtChecks_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6EQ1dim6TopMay20GSTStartPtChecks_run3_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6SQdim6TopMay20GSTStartPtChecks_run3_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6EQ1dim6TopMay20GSTStartPtChecks_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testDIM6EQ1dim6TopMay20GSTStartPtChecks_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testctG0DIM6SQdim6TopMay20GSTStartPtChecks_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testctG0DIM6SQdim6TopMay20GSTStartPtChecks_run3_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttH_testV2JustctGctpDIM6EQ1dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",    # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttH_testV2JustctGctpDIM6SQdim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",     # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttH_testV2JustctGctpDIM6EQ1dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",    # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttH_testV2JustctGctpDIM6SQdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",     # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testV2JustctGctpDIM6EQ1dim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testV2JustctGctpDIM6EQ1dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testV2JustctGctpDIM6SQdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",  # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHJet_testV2JustctGctpDIM6SQdim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",  # Check with just ctG and ctp to see if still see differences between dim6=1 and dim6^2
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanW_testHiggsInterferenceWithlldim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",          # Checking if ok to seperate H and ll processes
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHTOllq4fNoSchanW_testHiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",       # Checking if ok to seperate H and ll processes
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testHiggsInterferenceWithlldim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Checking if ok to seperate H and ll processes
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttll_testHiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                    # Checking if ok to seperate H and ll processes
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHTOll_testHiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                 # Checking if ok to seperate H and ll processes
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttllNoHiggs_testHiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",             # Checking if ok to seperate H and ll processes
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHTOllq4fNoSchanW_testV2HiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHTOllq4fNoSchanW_testV2HiggsInterferenceWithlldim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tHTOllq4fNoSchanW_testV2HiggsInterferenceWithlldim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testV2HiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testV2HiggsInterferenceWithlldim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanWNoHiggs0p_testV2HiggsInterferenceWithlldim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanW_testV2HiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanW_testV2HiggsInterferenceWithlldim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/tllq4fNoSchanW_testV2HiggsInterferenceWithlldim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHTOll_testV2HiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHTOll_testV2HiggsInterferenceWithlldim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHTOll_testV2HiggsInterferenceWithlldim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttllNoHiggs_testV2HiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttllNoHiggs_testV2HiggsInterferenceWithlldim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttllNoHiggs_testV2HiggsInterferenceWithlldim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttll_testV2HiggsInterferenceWithlldim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttll_testV2HiggsInterferenceWithlldim6TopMay20GST_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttll_testV2HiggsInterferenceWithlldim6TopMay20GST_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/PreliminaryStudies/ttHTOll_testHiggsInterferenceWithllWithMMLL10dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # Check wiht mmll 10 for consistancy with the ttll samples
-    ### Full Run 2 studies ValidationChecks  ###
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tHq4f_all22WCsBaselineStartPtTOP19001dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttlnuJet_all22WCsBaselineStartPtTOP19001dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tllq4fNoSchanWNoHiggs0p_all22WCsBaselineStartPtTOP19001dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttHJet_all22WCsBaselineStartPtTOP19001dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttllNuNuJetNoHiggs_all22WCsBaselineStartPtTOP19001dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttbarJet_all22WCsBaselineStartPtTOP19001dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tllq4fNoSchanWNoHiggs0p_all22WCsDim6Eq0dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz", # SM
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttbarJet_all22WCsDim6Eq0dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                # SM
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttlnuJet_all22WCsDim6Eq0dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                # SM
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tHq4f_all22WCsDim6Eq0dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                   # SM
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttllNuNuJetNoHiggs_all22WCsDim6Eq0dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",      # SM
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttHJet_all22WCsDim6Eq0dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",                  # SM
-    ###  Full Run 2 FP samples ###
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttHJet_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttlnuJet_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/ttllNuNuJetNoHiggs_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tllq4fNoSchanWNoHiggs0p_all22WCsStartPtCheckV2dim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/FullR2Studies/ValidationChecks/tHq4f_all22WCsStartPtCheckdim6TopMay20GST_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    ### Pheno paper JHEP review studies ###
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttW_cbWCheck1dForPhenodim6TopMay20GSTAxisScan_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttW_cbWCheck1dForPhenodim6TopMay20GSTAxisScan_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttW_cptbCheck1dForPhenodim6TopMay20GSTAxisScan_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttW_cbWCheck1dForPhenodim6TopMay20GSTAxisScan_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttW_cptbCheck1dForPhenodim6TopMay20GSTAxisScan_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttW_cptbCheck1dForPhenodim6TopMay20GSTAxisScan_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttWJet_cptbCheck1dForPhenodim6TopMay20GSTAxisScan_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttWJet_cbWCheck1dForPhenodim6TopMay20GSTAxisScan_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttWJet_cptbCheck1dForPhenodim6TopMay20GSTAxisScan_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttWJet_cbWCheck1dForPhenodim6TopMay20GSTAxisScan_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttWJet_cptbCheck1dForPhenodim6TopMay20GSTAxisScan_run2_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
-    #"kmohrman/gridpack_scans/ForPhenoJhepReviewStudies/ttWJet_cbWCheck1dForPhenodim6TopMay20GSTAxisScan_run1_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
+
+    "hnelson2/gridpack_scans/MLsamples/ttHJetgg_ctGTesting01AxisScan_run0_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz",
 ]
 
 FullR2_gridpack_list = [
