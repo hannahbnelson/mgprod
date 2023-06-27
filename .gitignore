@@ -8,6 +8,9 @@ __pycache__/
 
 # Specific directories
 lobster_workflow/python_cfgs/modified/*
+UL2017/CMSSW_10_6_19_patch2/
+UL2017/CMSSW_10_6_19_patch3/
+UL2017/CMSSW_9_3_1/
 
 # Misc local files
 *.txt
