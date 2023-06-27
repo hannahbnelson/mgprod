@@ -24,7 +24,7 @@ master_label = 'T3_EFT_{tstamp}'.format(tstamp=timestamp_tag)
 # 4. Choose names for the output
 # 5. Specify the gridpacks to run over
 # 6. Specify the CMSSW release
-# 7. If needed edit fragment map and event multipliers if needed
+# 7. If needed edit fragment map and event multipliers
 
 
 # Specify number of events
