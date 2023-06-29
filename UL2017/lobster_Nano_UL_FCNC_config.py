@@ -2,21 +2,19 @@ import datetime
 import os
 import sys
 import shutil
-
-from lobster import cmssw
 from lobster.core import AdvancedOptions, Category, Config, Dataset,ParentDataset, StorageConfiguration, Workflow
 
 sys.path.append(os.getcwd())
-from helpers.utils import regex_match, run_process
+#from helpers.utils import regex_match, run_process
 
 MODIFIED_CFG_DIR = "python_cfgs/modified"
 timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 input_path = "/store/user/"
 input_path_full = "/hadoop" + input_path
 
-master_label = 'CRC_EFT_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
+#master_label = 'CRC_EFT_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
 #master_label = 'EFT_ALL_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
-#master_label = 'EFT_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
+master_label = 'EFT_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 #master_label = 'EFT_testNAOD_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 
 ########## Set up the lobster cfg ##########
@@ -26,16 +24,17 @@ master_label = 'CRC_EFT_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
 #    - Modify gen cfgs
 
 # Specify what kind of output to make
-#STEPS = 'throughGEN'
-STEPS = 'throughNAOD'
+STEPS = 'throughGEN'
+#STEPS = 'throughNAOD'
 #STEPS = 'throughNAOD'
 
-PATH_TO_NAOD_CMSSW = "/afs/crc.nd.edu/user/r/rgoldouz/MakeLobsterJobs/UL/mgprod/lobster_workflow/CMSSW_10_6_19_patch2"
+#PATH_TO_NAOD_CMSSW = "/afs/crc.nd.edu/user/r/rgoldouz/MakeLobsterJobs/UL/mgprod/lobster_workflow/CMSSW_10_6_19_patch2"
+PATH_TO_NAOD_CMSSW = "/afs/crc.nd.edu/user/h/hnelson2/mgprod/UL2017/CMSSW_10_6_19_patch2/"
 
 # Specfy the run setup
-RUN_SETUP = 'UL_production'
+#RUN_SETUP = 'UL_production'
 #RUN_SETUP = 'mg_studies'
-#RUN_SETUP = 'testing'
+RUN_SETUP = 'testing'
 
 # Specify the UL year
 #UL_YEAR = 'UL16'
@@ -45,8 +44,9 @@ UL_YEAR = 'UL17'
 
 # Name the output
 out_ver = "v1"   # The version index for the OUTPUT directory
+out_tag = "Test2017"
 #out_tag = "FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_GEN_ULCheck"
-out_tag = "FullR2Studies/ValidationChecks/ttXJet_dim6TopMay20GST_run0StartPt_qCutScan_GEN_"
+#out_tag = "FullR2Studies/ValidationChecks/ttXJet_dim6TopMay20GST_run0StartPt_qCutScan_GEN_"
 #out_tag = "ForPhenoJhepReviewStudies/ttZJet_sampleForDoubleCheckingQcut_dim6TopMay20GST_GEN_"
 prod_tag = "Round1/Batch3"
 
@@ -67,13 +67,14 @@ input_dirs = [
     #os.path.join(input_path_full,"kmohrman/LHE_step/FullR2Studies/ULChecks/ttXJet-tXq_testUpdateGenproddim6TopMay20GST_ULCheck-UL18/v1"),
     #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch1/LHE_step/v1/"),
     #os.path.join(input_path_full,"kmohrman/FullProduction/FullR2/UL17/Round1/Batch2/LHE_step/v1/"),
-    os.path.join(input_path_full,"rgoldouz/FullProduction/FullR2/UL17/Round1/Batch3/postLHE_step/v1/"),
+    #os.path.join(input_path_full,"rgoldouz/FullProduction/FullR2/UL17/Round1/Batch3/postLHE_step/v1/"),
 ]
 
 
 
 ########## Select input directories according to whitelists ##########
 
+'''
 lhe_dirs = []
 for path in input_dirs:
     for fd in os.listdir(path):
@@ -89,6 +90,11 @@ for path in input_dirs:
             continue
         relpath = os.path.relpath(path,input_path_full)
         lhe_dirs.append(os.path.join(relpath,fd))
+'''
+
+lhe_dirs = [
+    "hnelson2/LHE_step/tests/lobster_20230627_1219/v1/lhe_step_tuFCNC_tHProduction"
+]
 
 '''
 # Hardcode the lhe dirs by hand
@@ -420,10 +426,10 @@ wf = []
 print "Generating workflows:"
 for idx,lhe_dir in enumerate(lhe_dirs):
     # Raise exception if trying to make UL sample but the UL year is not in the path anywhere
-    if ( (UL_YEAR not in lhe_dir) or ((UL_YEAR == "UL16") and ("APV" in lhe_dir)) ):
-        print "\nWARNING: UL year selected, but lhe dir path does not contain this UL year in it anywhere, are you sure you have the right path? Please double check."
-        print "\tUL Year:" , UL_YEAR, "\n\tPath:" , lhe_dir, "\nExiting...\n"
-        raise Exception
+    #if ( (UL_YEAR not in lhe_dir) or ((UL_YEAR == "UL16") and ("APV" in lhe_dir)) ):
+    #    print "\nWARNING: UL year selected, but lhe dir path does not contain this UL year in it anywhere, are you sure you have the right path? Please double check."
+    #    print "\tUL Year:" , UL_YEAR, "\n\tPath:" , lhe_dir, "\nExiting...\n"
+    #    raise Exception
     print "\t[{0}/{1}] LHE Input: {dir}".format(idx+1,len(lhe_dirs),dir=lhe_dir)
     head,tail = os.path.split(lhe_dir)
     arr = tail.split('_')
@@ -556,17 +562,19 @@ for idx,lhe_dir in enumerate(lhe_dirs):
         ),
         category=naod_resources
     )
-    wf.extend([Justnaod])
+
+    # wf.extend([Justnaod])
+
     # Specify which steps to run
-#    if (STEPS == 'throughGEN'):
-#        wf.extend([gen])
-#    elif (STEPS == 'throughMAOD'):
-#        wf.extend([gen,sim,digi,hlt,reco,maod])
-#    elif (STEPS == 'throughNAOD'):
-#        wf.extend([gen,sim,digi,hlt,reco,maod,naod])
-#    else:
-#        print "\nUnknown steps" , STEPS , "exiting...\n"
-#        raise Exception
+    if (STEPS == 'throughGEN'):
+        wf.extend([gen])
+    elif (STEPS == 'throughMAOD'):
+        wf.extend([gen,sim,digi,hlt,reco,maod])
+    elif (STEPS == 'throughNAOD'):
+        wf.extend([gen,sim,digi,hlt,reco,maod,naod])
+    else:
+        print "\nUnknown steps" , STEPS , "exiting...\n"
+        raise Exception
 
 config = Config(
     label=master_label,

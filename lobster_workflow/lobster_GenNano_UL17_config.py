@@ -74,9 +74,9 @@ cmsRun_config = '/afs/crc.nd.edu/user/h/hnelson2/mgprod/lobster_workflow/ul_cfgs
 
 print "Generating workflows:"
 
-for gridpack in gridpack_list.items():
+for gridpack in gridpack_list:
     GN = Workflow(
-        label='NanoGen_{tag}'.format(tag=key),
+        label='NanoGen',
         command='cmsRun {cfg}'.format(cfg=cmsRun_config),
         sandbox=cmssw.Sandbox(release=cmsswSSource),
         merge_size= '256M',

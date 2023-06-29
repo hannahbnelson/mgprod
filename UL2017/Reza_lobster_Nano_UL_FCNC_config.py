@@ -7,17 +7,17 @@ from lobster import cmssw
 from lobster.core import AdvancedOptions, Category, Config, Dataset,ParentDataset, StorageConfiguration, Workflow
 
 sys.path.append(os.getcwd())
-from helpers.utils import regex_match, run_process
+#from helpers.utils import regex_match, run_process
 
 MODIFIED_CFG_DIR = "python_cfgs/modified"
 timestamp_tag = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 input_path = "/store/user/"
 input_path_full = "/hadoop" + input_path
 
-master_label = 'CRC_EFT_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
+#master_label = 'CRC_EFT_postLHE_crc_{tstamp}'.format(tstamp=timestamp_tag)
 #master_label = 'EFT_ALL_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 #master_label = 'EFT_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
-#master_label = 'EFT_testNAOD_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
+master_label = 'EFT_testNAOD_T3_postLHE_{tstamp}'.format(tstamp=timestamp_tag)
 
 ########## Set up the lobster cfg ##########
 
@@ -33,9 +33,9 @@ STEPS = 'throughNAOD'
 PATH_TO_NAOD_CMSSW = "/afs/crc.nd.edu/user/r/rgoldouz/MakeLobsterJobs/UL/mgprod/lobster_workflow/CMSSW_10_6_19_patch2"
 
 # Specfy the run setup
-RUN_SETUP = 'UL_production'
+#RUN_SETUP = 'UL_production'
 #RUN_SETUP = 'mg_studies'
-#RUN_SETUP = 'testing'
+RUN_SETUP = 'testing'
 
 # Specify the UL year
 #UL_YEAR = 'UL16'

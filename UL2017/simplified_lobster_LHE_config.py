@@ -30,7 +30,7 @@ master_label = 'T3_EFT_{tstamp}'.format(tstamp=timestamp_tag)
 # Specify number of events
 #events_per_gridpack = 5e5
 #events_per_gridpack = 100e3
-events_per_gridpack = 100
+events_per_gridpack = 5e3
 events_per_lumi = 500
 
 # Specify the run setup
@@ -49,7 +49,7 @@ if ((UL_YEAR != 'UL16') and (UL_YEAR != 'UL16APV') and (UL_YEAR != 'UL17') and (
 
 # Name the output 
 version = "v1"
-grp_tag = "ShortTest2017"
+grp_tag = "SmallTest2017"
 prod_tag = "Round1/Batch1"
 
 if (UL_YEAR != "NONE"):
